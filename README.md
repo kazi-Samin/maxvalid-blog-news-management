@@ -1,0 +1,1 @@
+# maxvalid-blog-news-management
