@@ -79,35 +79,29 @@ function PublicLayout() {
             <p>This institution is striving to build an ideal welfare society by following the footsteps of the Prophet of Humanity, the Messenger of Human Freedom and Peace, the ideal of human service, the Prophet Muhammad (PBUH), in the service of humanity.</p>
           </div>
           
-          <div className={styles.footerLinks}>
-            <div className={styles.footerColumn}>
+          <div className={styles.footerLinksGroup}>
+            <div className={styles.footerCol}>
               <h4>Company</h4>
-              <ul>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="#">About Us</Link></li>
-                <li><Link to="#">Our Work</Link></li>
-                <li><Link to="#">Gallery</Link></li>
-                <li><Link to="/">Blog</Link></li>
-              </ul>
+              <Link to="/">Home</Link>
+              <Link to="#">About Us</Link>
+              <Link to="#">Our Work</Link>
+              <Link to="#">Gallery</Link>
+              <Link to="/">Blog</Link>
             </div>
             
-            <div className={styles.footerColumn}>
+            <div className={styles.footerCol}>
               <h4>Donate</h4>
-              <ul>
-                <li><Link to="#">Orphan Support</Link></li>
-                <li><Link to="#">Disaster Relief</Link></li>
-                <li><Link to="#">Zakat</Link></li>
-                <li><Link to="#">Education</Link></li>
-              </ul>
+              <Link to="#">Orphan Support</Link>
+              <Link to="#">Disaster Relief</Link>
+              <Link to="#">Zakat</Link>
+              <Link to="#">Education</Link>
             </div>
 
-            <div className={styles.footerColumn}>
+            <div className={styles.footerCol}>
               <h4>Others</h4>
-              <ul>
-                <li><Link to="#">Privacy Policy</Link></li>
-                <li><Link to="#">Terms of Service</Link></li>
-                <li><Link to="#">Contact Us</Link></li>
-              </ul>
+              <Link to="#">Privacy Policy</Link>
+              <Link to="#">Terms of Service</Link>
+              <Link to="#">Contact Us</Link>
             </div>
           </div>
         </div>
