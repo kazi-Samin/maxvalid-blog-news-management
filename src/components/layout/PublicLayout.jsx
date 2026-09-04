@@ -12,13 +12,10 @@ function PublicLayout() {
   const location = useLocation();
   const { isAuthenticated, logout } = useAuth();
 
-  const isHomeOrNews = location.pathname === '/' || location.pathname === '/news';
-  const isLightPage = !isHomeOrNews;
-
   return (
     <div className={styles.layout}>
-      {/* Header overlaid on Hero for Home/News, solid/light pill for subpages */}
-      <header className={isLightPage ? `${styles.header} ${styles.headerLight}` : styles.header}>
+      {/* Floating pill navbar — transparent frosted glass over hero background across all pages */}
+      <header className={styles.header}>
         <div className={styles.container}>
           <div className={styles.logo}>
             <Link to="/">
