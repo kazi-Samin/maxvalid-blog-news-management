@@ -4,10 +4,10 @@
   font-family: inherit;
 }
 
-/* Left branding panel */
+/* Left branding panel - uses the Figma primary blue */
 .leftPanel {
-  flex: 0 0 420px;
-  background: linear-gradient(145deg, #0a1e3c 0%, #0d47a1 60%, #1565c0 100%);
+  flex: 0 0 400px;
+  background: linear-gradient(145deg, #003580 0%, #0057d8 55%, #1a73e8 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -71,9 +71,19 @@
 .brandDecor {
   width: 40px;
   height: 3px;
-  background: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.5);
   border-radius: 2px;
-  margin: 1.5rem auto 0;
+  margin: 1.25rem auto;
+}
+
+.brandQuote {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.6;
+  max-width: 220px;
+  margin: 0 auto;
+  text-align: center;
+  font-style: italic;
 }
 
 /* Right form panel */

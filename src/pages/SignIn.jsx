@@ -22,10 +22,10 @@ function SignIn() {
     setLoading(true);
     // Simulated auth — in production this calls a real API
     setTimeout(() => {
-      if (email === 'admin@maxvalid.com' && password === 'admin123') {
+      if (email === 'superadmin@kichukori.com' && password === 'admin123') {
         navigate('/admin/content');
       } else {
-        setError('Invalid email or password. Try admin@maxvalid.com / admin123');
+        setError('Invalid credentials. Try superadmin@kichukori.com / admin123');
         setLoading(false);
       }
     }, 800);
@@ -36,10 +36,14 @@ function SignIn() {
       {/* Left panel - branding */}
       <div className={styles.leftPanel}>
         <div className={styles.brandContent}>
-          <img src={logoImage} alt="MaxValid Logo" className={styles.brandLogo} />
-          <h1 className={styles.brandTitle}>MaxValid</h1>
+          <img src={logoImage} alt="Bandhan Paribar Logo" className={styles.brandLogo} />
+          <h1 className={styles.brandTitle}>Bandhan Paribar</h1>
           <p className={styles.brandSub}>Blog &amp; News Management System</p>
           <div className={styles.brandDecor} />
+          <p className={styles.brandQuote}>
+            Striving to build an ideal welfare society
+            in service of humanity.
+          </p>
         </div>
       </div>
 
@@ -47,8 +51,8 @@ function SignIn() {
       <div className={styles.rightPanel}>
         <div className={styles.formBox}>
           <div className={styles.formHeader}>
-            <h2 className={styles.formTitle}>Welcome back</h2>
-            <p className={styles.formSub}>Sign in to access the admin dashboard</p>
+            <h2 className={styles.formTitle}>Welcome back 👋</h2>
+            <p className={styles.formSub}>Sign in to the Bandhan Paribar admin panel</p>
           </div>
 
           <form className={styles.form} onSubmit={handleSubmit} noValidate>
@@ -58,7 +62,7 @@ function SignIn() {
                 id="email"
                 type="email"
                 className={styles.input}
-                placeholder="admin@maxvalid.com"
+                placeholder="superadmin@kichukori.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 autoComplete="email"

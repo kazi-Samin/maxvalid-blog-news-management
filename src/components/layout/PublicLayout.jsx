@@ -83,7 +83,7 @@ function PublicLayout() {
           </div>
         </div>
         <div className={styles.copyright}>
-          &copy; 2026 MaxValid. All rights reserved.
+          &copy; 2026 Bandhan Paribar. All rights reserved.
         </div>
       </footer>
 
