@@ -4,6 +4,7 @@ import AdminLayout from './components/layout/AdminLayout';
 import PublicNews from './pages/PublicNews';
 import AdminDashboardList from './pages/AdminDashboardList';
 import AdminDashboardCreate from './pages/AdminDashboardCreate';
+import './App.css';
 
 function App() {
   return (
@@ -19,8 +20,12 @@ function App() {
         <Route index element={<Navigate to="/admin/content" replace />} />
         <Route path="content" element={<AdminDashboardList />} />
         <Route path="content/create" element={<AdminDashboardCreate />} />
+        {/* Placeholder routes for other nav items */}
+        <Route path="dashboard" element={<AdminDashboardList />} />
+        <Route path="users" element={<AdminDashboardList />} />
+        <Route path="settings" element={<AdminDashboardList />} />
       </Route>
-      
+
       {/* Fallback */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

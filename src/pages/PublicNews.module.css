@@ -2,10 +2,10 @@
   width: 100%;
 }
 
+/* ===== HERO ===== */
 .hero {
   position: relative;
-  height: 400px;
-  background-image: url('/src/assets/hero.png');
+  height: 460px;
   background-size: cover;
   background-position: center;
   display: flex;
@@ -16,7 +16,7 @@
 .heroOverlay {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.42);
 }
 
 .heroContent {
@@ -29,24 +29,26 @@
   color: #fff;
   font-size: 3rem;
   font-weight: 700;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  letter-spacing: 0.01em;
 }
 
+/* ===== CONTENT ===== */
 .contentSection {
-  padding: 3rem 0;
-  background-color: var(--bg-light);
+  padding: 2rem 0 4rem;
+  background-color: #f4f5f7;
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 2rem;
 }
 
+/* ===== SEARCH ===== */
 .searchContainer {
   position: relative;
-  margin-bottom: 3rem;
-  max-width: 800px;
+  margin-bottom: 2rem;
 }
 
 .searchIcon {
@@ -59,39 +61,47 @@
 
 .searchInput {
   width: 100%;
-  padding: 1rem 1rem 1rem 3rem;
-  border: 1px solid var(--border-color);
+  padding: 0.85rem 1rem 0.85rem 2.8rem;
+  border: 1px solid #dde1e7;
   border-radius: 8px;
-  font-size: 1rem;
-  background: #fdfdfd;
+  font-size: 0.95rem;
+  background: #fff;
+  color: #495057;
   transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: inherit;
 }
 
 .searchInput:focus {
   outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0,123,255,0.08);
 }
 
+/* ===== SECTION TITLE ===== */
 .sectionTitle {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 1.5rem;
-  color: #343a40;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  color: #212529;
 }
 
+/* ===== GRID LAYOUT ===== */
 .gridContainer {
   display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 2rem;
+  grid-template-columns: 200px 1fr;
+  gap: 1.5rem;
   align-items: start;
+  margin-top: 2rem;
 }
 
+/* ===== SIDEBAR ===== */
 .sidebar {
   background: #fff;
   border-radius: 12px;
-  padding: 1rem 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  padding: 0.5rem 0;
+  border: 1px solid #e9ecef;
+  position: sticky;
+  top: 1rem;
 }
 
 .categoryList {
@@ -100,42 +110,45 @@
 }
 
 .categoryList li {
-  padding: 0.8rem 1.5rem;
-  font-size: 0.95rem;
+  padding: 0.65rem 1.1rem;
+  font-size: 0.85rem;
   color: #495057;
   cursor: pointer;
   border-left: 3px solid transparent;
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.15s, color 0.15s;
+  line-height: 1.4;
 }
 
 .categoryList li:hover {
-  background: #f8f9fa;
+  background: #f1f3f5;
   color: #212529;
 }
 
 .categoryList li.activeCategory {
-  background: #f8f9fa;
-  color: var(--primary-color);
-  border-left-color: var(--primary-color);
+  background: #f1f3f5;
+  color: #007bff;
+  border-left-color: #007bff;
   font-weight: 600;
 }
 
+/* ===== ARTICLES GRID: exactly 3 columns, 16px gap ===== */
 .articlesGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  align-items: stretch; /* all cards in a row match height */
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1100px) {
   .gridContainer {
     grid-template-columns: 1fr;
   }
   .sidebar {
-    display: none; /* Mobile filters usually require a dropdown or off-canvas */
+    display: none;
   }
-  .heroTitle {
-    font-size: 2.5rem;
+  .articlesGrid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -144,12 +157,21 @@
     grid-template-columns: 1fr;
   }
   .hero {
-    height: 300px;
+    height: 280px;
   }
   .heroTitle {
     font-size: 2rem;
   }
   .contentSection {
-    padding: 1.5rem 0;
+    padding: 1.5rem 0 6rem;
+  }
+  .container {
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .articlesGrid {
+    grid-template-columns: 1fr;
   }
 }
