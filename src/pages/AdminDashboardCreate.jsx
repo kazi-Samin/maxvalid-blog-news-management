@@ -8,6 +8,7 @@ import {
 import styles from './AdminDashboardCreate.module.css';
 
 const TAG_OPTIONS = ['News', 'Blog', 'Event', 'Health', 'Education', 'Community', 'Disaster'];
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
 function AdminDashboardCreate() {
   const navigate = useNavigate();
@@ -17,12 +18,32 @@ function AdminDashboardCreate() {
   const [body, setBody] = useState('');
   const [tags, setTags] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
+  const [uploadError, setUploadError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [activeFormats, setActiveFormats] = useState({ bold: false, italic: false, underline: false });
+
   const fileInputRef = useRef(null);
+  const textareaRef = useRef(null);
 
   const MAX_TITLE = 64;
 
   const handleFileSelect = (file) => {
     if (!file) return;
+    setUploadError('');
+
+    // Validate file size (max 5MB)
+    if (file.size > MAX_FILE_SIZE) {
+      setUploadError('File size exceeds 5MB. Please select a smaller image or document.');
+      return;
+    }
+
+    // Validate file type (PDF, JPG, JPEG, PNG)
+    const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
+    if (!validTypes.includes(file.type)) {
+      setUploadError('Invalid file format. Please upload a PDF, JPG, JPEG, or PNG file.');
+      return;
+    }
+
     const reader = new FileReader();
     reader.onload = (e) => setUploadedImage(e.target.result);
     reader.readAsDataURL(file);
@@ -33,7 +54,7 @@ function AdminDashboardCreate() {
     e.preventDefault();
     setIsDragging(false);
     const file = e.dataTransfer.files[0];
-    if (file && file.type.startsWith('image/')) handleFileSelect(file);
+    if (file) handleFileSelect(file);
   };
 
   const toggleTag = (tag) => {
@@ -48,14 +69,43 @@ function AdminDashboardCreate() {
     }
   };
 
+  // Lightweight rich text toolbar format appender
+  const applyFormat = (syntax, key) => {
+    setActiveFormats(prev => ({ ...prev, [key]: !prev[key] }));
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = body.substring(start, end);
+    let formatted = '';
+
+    if (syntax === 'list') {
+      formatted = selectedText ? selectedText.split('\n').map(line => `• ${line}`).join('\n') : '• ';
+    } else if (syntax === 'link') {
+      formatted = selectedText ? `[${selectedText}](https://)` : '[Link title](https://)';
+    } else {
+      formatted = `${syntax}${selectedText || 'text'}${syntax}`;
+    }
+
+    const newText = body.substring(0, start) + formatted + body.substring(end);
+    setBody(newText);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!title.trim()) {
       alert('Please provide a content title.');
       return;
     }
-    alert('Content created successfully!');
-    navigate('/admin/blog-news');
+
+    setIsSubmitting(true);
+
+    setTimeout(() => {
+      setIsSubmitting(false);
+      alert('Content created successfully!');
+      navigate('/admin/blog-news');
+    }, 600);
   };
 
   return (
@@ -90,21 +140,69 @@ function AdminDashboardCreate() {
 
         {/* Formatting Toolbar */}
         <div className={styles.toolbarBox}>
-          <button type="button" className={styles.toolBtn} title="Bold"><Bold size={16} /></button>
-          <button type="button" className={styles.toolBtn} title="Italic"><Italic size={16} /></button>
-          <button type="button" className={styles.toolBtn} title="Underline"><Underline size={16} /></button>
-          <button type="button" className={styles.toolBtn} title="Heading"><Type size={16} /></button>
-          <button type="button" className={styles.toolBtn} title="List"><List size={16} /></button>
-          <button type="button" className={styles.toolBtn} title="Add Image" onClick={() => setIsModalOpen(true)}>
+          <button
+            type="button"
+            className={activeFormats.bold ? `${styles.toolBtn} ${styles.toolActive}` : styles.toolBtn}
+            title="Bold (**text**)"
+            onClick={() => applyFormat('**', 'bold')}
+          >
+            <Bold size={16} />
+          </button>
+          <button
+            type="button"
+            className={activeFormats.italic ? `${styles.toolBtn} ${styles.toolActive}` : styles.toolBtn}
+            title="Italic (*text*)"
+            onClick={() => applyFormat('*', 'italic')}
+          >
+            <Italic size={16} />
+          </button>
+          <button
+            type="button"
+            className={activeFormats.underline ? `${styles.toolBtn} ${styles.toolActive}` : styles.toolBtn}
+            title="Underline (__text__)"
+            onClick={() => applyFormat('__', 'underline')}
+          >
+            <Underline size={16} />
+          </button>
+          <button
+            type="button"
+            className={styles.toolBtn}
+            title="Heading (# Heading)"
+            onClick={() => applyFormat('# ', 'heading')}
+          >
+            <Type size={16} />
+          </button>
+          <button
+            type="button"
+            className={styles.toolBtn}
+            title="Bullet List (• item)"
+            onClick={() => applyFormat('list', 'list')}
+          >
+            <List size={16} />
+          </button>
+          <button
+            type="button"
+            className={styles.toolBtn}
+            title="Add Image"
+            onClick={() => setIsModalOpen(true)}
+          >
             <ImageIcon size={16} />
           </button>
-          <button type="button" className={styles.toolBtn} title="Add Link"><LinkIcon size={16} /></button>
+          <button
+            type="button"
+            className={styles.toolBtn}
+            title="Add Link ([text](url))"
+            onClick={() => applyFormat('link', 'link')}
+          >
+            <LinkIcon size={16} />
+          </button>
         </div>
 
         {/* Content Body */}
         <div className={styles.field}>
           <label className={styles.label}>Content Body</label>
           <textarea
+            ref={textareaRef}
             placeholder="Type something...."
             className={styles.textarea}
             rows={10}
@@ -161,6 +259,7 @@ function AdminDashboardCreate() {
           <button
             type="button"
             className={styles.cancelBtn}
+            disabled={isSubmitting}
             onClick={() => navigate('/admin/blog-news')}
           >
             Cancel
@@ -168,17 +267,18 @@ function AdminDashboardCreate() {
           <button
             type="button"
             className={styles.submitBtn}
+            disabled={isSubmitting}
             onClick={handleSubmit}
           >
-            Create Content
+            {isSubmitting ? 'Creating...' : 'Create Content'}
           </button>
         </div>
 
       </div>
 
-      {/* Upload Modal Popup - Matches Figma Modal screenshot 1 */}
+      {/* Upload Modal Popup */}
       {isModalOpen && (
-        <div className={styles.modalOverlay} onClick={() => setIsModalOpen(false)}>
+        <div className={styles.modalOverlay} onClick={() => { setIsModalOpen(false); setUploadError(''); }}>
           <div
             className={isDragging ? `${styles.modalCard} ${styles.dragging}` : styles.modalCard}
             onClick={(e) => e.stopPropagation()}
@@ -186,7 +286,7 @@ function AdminDashboardCreate() {
             onDragLeave={() => setIsDragging(false)}
             onDrop={handleDrop}
           >
-            <button className={styles.closeBtn} onClick={() => setIsModalOpen(false)}>
+            <button className={styles.closeBtn} onClick={() => { setIsModalOpen(false); setUploadError(''); }}>
               <X size={16} />
             </button>
 
@@ -197,9 +297,15 @@ function AdminDashboardCreate() {
             <p className={styles.modalTitle}>Choose a file or drag &amp; drop it here</p>
             <p className={styles.modalSub}>PDF, JPG, JPEG, PNG . MAX (5MB)</p>
 
+            {uploadError && (
+              <div style={{ background: '#fef3f2', border: '1px solid #fda29b', color: '#b42318', fontSize: '0.8rem', padding: '0.6rem 0.8rem', borderRadius: '6px', marginBottom: '1rem' }}>
+                {uploadError}
+              </div>
+            )}
+
             <input
               type="file"
-              accept="image/*,.pdf"
+              accept="image/jpeg,image/png,image/jpg,application/pdf"
               ref={fileInputRef}
               style={{ display: 'none' }}
               onChange={(e) => handleFileSelect(e.target.files[0])}
