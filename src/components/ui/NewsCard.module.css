@@ -1,26 +1,27 @@
 .card {
-  background: #fff;
-  border-radius: 20px;
+  background: #ffffff;
+  border-radius: 16px;
   overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid #eaecf0;
   display: flex;
   flex-direction: column;
-  height: 100%; /* fill the grid row height */
-  transition: transform 0.22s, box-shadow 0.22s;
+  height: 100%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
+  box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.05);
 }
 
 .card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 12px 24px -4px rgba(16, 24, 40, 0.08);
 }
 
-/* Image takes top portion of card - ~55% of 602px = ~280px */
 .imageWrapper {
   width: 100%;
-  height: 220px;
+  height: 195px;
   overflow: hidden;
   flex-shrink: 0;
+  border-bottom: 1px solid #f2f4f7;
 }
 
 .image {
@@ -31,31 +32,33 @@
 }
 
 .card:hover .image {
-  transform: scale(1.04);
+  transform: scale(1.03);
 }
 
-/* Content: padding 16px top/bottom, 8px sides (Figma spec) */
 .content {
-  padding: 16px 8px 16px 16px;
+  padding: 1.5rem 1.25rem 1.25rem 1.25rem;
   display: flex;
   flex-direction: column;
   flex: 1;
 }
 
 .title {
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   font-weight: 700;
+  color: #101828;
   margin-bottom: 0.6rem;
-  line-height: 1.35;
-  color: #1a1a2e;
+  line-height: 1.4;
+  text-align: left;
+  letter-spacing: -0.01em;
 }
 
 .desc {
   font-size: 0.85rem;
-  color: #6c757d;
+  color: #475467;
   line-height: 1.6;
+  text-align: left;
   flex: 1;
-  /* clamp to 4 lines like Figma */
+  margin-bottom: 1.25rem;
   display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
@@ -63,30 +66,32 @@
 }
 
 .date {
-  font-size: 0.82rem;
-  color: #6c757d;
+  font-size: 0.8rem;
+  color: #667085;
   font-weight: 500;
-  margin-top: 1rem;
+  text-align: left;
+  margin-top: auto;
 }
 
 /* ===== FEATURED CARD ===== */
 .featuredCard {
-  background: #fff;
+  background: #ffffff;
   border-radius: 16px;
   overflow: hidden;
-  border: 1px solid rgba(0,0,0,0.08);
+  border: 1px solid #eaecf0;
   display: flex;
   flex-direction: row;
   cursor: pointer;
-  transition: box-shadow 0.2s;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
   margin-bottom: 0;
+  box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.05);
 }
 
 .featuredCard:hover {
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+  box-shadow: 0px 12px 24px -4px rgba(16, 24, 40, 0.08);
 }
 
-/* Featured image: roughly square/portrait on left side */
 .featuredImageWrapper {
   flex: 0 0 380px;
   height: 240px;
@@ -95,7 +100,7 @@
 
 .featuredContent {
   flex: 1;
-  padding: 2rem 2rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -104,16 +109,18 @@
 .featuredTitle {
   font-size: 1.35rem;
   font-weight: 700;
+  color: #101828;
   margin-bottom: 0.75rem;
   line-height: 1.35;
-  color: #1a1a2e;
+  text-align: left;
 }
 
 .featuredDesc {
-  font-size: 0.92rem;
-  color: #6c757d;
+  font-size: 0.9rem;
+  color: #475467;
   line-height: 1.65;
-  margin-bottom: 1rem;
+  text-align: left;
+  margin-bottom: 1.25rem;
 }
 
 /* ===== RESPONSIVE ===== */
@@ -134,5 +141,8 @@
   }
   .imageWrapper {
     height: 180px;
+  }
+  .content {
+    padding: 1.25rem 1rem 1rem 1rem;
   }
 }
