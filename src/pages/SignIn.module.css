@@ -104,10 +104,30 @@
   padding: 2.5rem;
   box-shadow: 0 4px 24px rgba(0,0,0,0.07);
   border: 1px solid #e9ecef;
+  position: relative;
+}
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #007bff;
+  text-decoration: none;
+  margin-bottom: 1.5rem;
+  padding: 0.4rem 0.8rem;
+  background: #eef6ff;
+  border-radius: 6px;
+  transition: background 0.15s, color 0.15s;
+}
+.backButton:hover {
+  background: #dbebff;
+  color: #0056b3;
 }
 
 .formHeader {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .formTitle {
@@ -189,6 +209,7 @@
   padding: 0.7rem 1rem;
   border-radius: 8px;
   line-height: 1.5;
+  margin-bottom: 1rem;
 }
 
 .submitBtn {
@@ -208,18 +229,6 @@
 .submitBtn:hover:not(:disabled) { background: #0062cc; }
 .submitBtn:active:not(:disabled) { transform: scale(0.99); }
 .submitBtn:disabled { opacity: 0.7; cursor: not-allowed; }
-
-.backLink {
-  text-align: center;
-  margin-top: 1.5rem;
-  font-size: 0.85rem;
-}
-.backLink a {
-  color: #007bff;
-  font-weight: 500;
-  transition: opacity 0.2s;
-}
-.backLink a:hover { opacity: 0.75; }
 
 /* Mobile */
 @media (max-width: 768px) {

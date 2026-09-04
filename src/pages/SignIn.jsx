@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import logoImage from '../assets/logo.png';
 import styles from './SignIn.module.css';
@@ -16,7 +16,7 @@ function SignIn() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const from = location.state?.from?.pathname || '/admin/content';
+  const from = location.state?.from?.pathname || '/admin/blog-news';
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -56,20 +56,23 @@ function SignIn() {
 
       {/* Right panel - form */}
       <div className={styles.rightPanel}>
-        <div className={styles.formCard}>
-          <div className={styles.backLinkWrapper}>
-            <Link to="/" className={styles.backLink}>
-              &larr; Back to Website
-            </Link>
+        <div className={styles.formBox}>
+          
+          {/* Prominent Back Button */}
+          <Link to="/" className={styles.backButton} title="Return to public homepage">
+            <ArrowLeft size={16} />
+            <span>Back to Home</span>
+          </Link>
+
+          <div className={styles.formHeader}>
+            <h2 className={styles.formTitle}>Welcome back</h2>
+            <p className={styles.formSub}>Sign in to the Bandhan Paribar admin panel</p>
           </div>
 
-          <h2 className={styles.formTitle}>Welcome back</h2>
-          <p className={styles.formSub}>Sign in to the Bandhan Paribar admin panel</p>
-
-          {error && <div className={styles.errorAlert}>{error}</div>}
+          {error && <div className={styles.errorMsg}>{error}</div>}
 
           <form onSubmit={handleSubmit} className={styles.form}>
-            <div className={styles.inputGroup}>
+            <div className={styles.field}>
               <label htmlFor="email" className={styles.label}>
                 Email Address
               </label>
@@ -84,7 +87,7 @@ function SignIn() {
               />
             </div>
 
-            <div className={styles.inputGroup}>
+            <div className={styles.field}>
               <label htmlFor="password" className={styles.label}>
                 Password
               </label>
@@ -109,8 +112,8 @@ function SignIn() {
               </div>
             </div>
 
-            <div className={styles.hintBox}>
-              <small>Demo Admin Credential: <strong>superadmin@kichukori.com</strong> / <strong>admin123</strong></small>
+            <div style={{ fontSize: '0.8rem', color: '#6c757d', background: '#eef2f7', padding: '0.6rem 0.8rem', borderRadius: '6px' }}>
+              Demo Admin Credential: <strong>superadmin@kichukori.com</strong> / <strong>admin123</strong>
             </div>
 
             <button type="submit" className={styles.submitBtn} disabled={loading}>
