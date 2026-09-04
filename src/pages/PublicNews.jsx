@@ -8,7 +8,7 @@ import heroImage from '../assets/image 96.png';
 import imgFeatured from '../assets/span.minimal__image__root.png';
 import styles from './PublicNews.module.css';
 
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 9; // 3 rows × 3 columns = 9 cards per page (matching Figma spec)
 
 function PublicNews() {
   const [selectedCategory, setSelectedCategory] = useState("All Gallery & Media");
@@ -26,7 +26,7 @@ function PublicNews() {
     return matchesCategory && matchesSearch;
   });
 
-  // Calculate pagination slice
+  // Calculate pagination slice for 9 cards per page
   const totalPages = Math.ceil(filteredNews.length / ITEMS_PER_PAGE) || 1;
   const currentArticles = filteredNews.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
@@ -82,7 +82,7 @@ function PublicNews() {
             image={imgFeatured}
           />
 
-          {/* 2-col: Sidebar + Articles Grid */}
+          {/* 2-col: Sidebar + 3x3 Articles Grid (9 cards per page) */}
           <div className={styles.gridContainer}>
             <aside className={styles.sidebar}>
               <ul className={styles.categoryList}>

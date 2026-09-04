@@ -60,27 +60,25 @@ function AdminDashboardCreate() {
 
   return (
     <div className={styles.container}>
-      {/* Header */}
+      {/* Breadcrumb Header */}
       <div className={styles.header}>
         <nav className={styles.breadcrumbs}>
           <span>Dashboard</span>
           <span className={styles.sep}>&rsaquo;</span>
-          <span>Content Management</span>
-          <span className={styles.sep}>&rsaquo;</span>
-          <span className={styles.current}>Create New Content</span>
+          <span>Create New Content</span>
         </nav>
         <h1 className={styles.title}>Create New Blog &amp; News</h1>
       </div>
 
       <div className={styles.formCard}>
 
-        {/* Title Field */}
+        {/* Content Title */}
         <div className={styles.field}>
           <label className={styles.label}>Content Title</label>
           <div className={styles.inputWrapper}>
             <input
               type="text"
-              placeholder="Enter content title..."
+              placeholder="Plan name"
               className={styles.input}
               value={title}
               maxLength={MAX_TITLE}
@@ -90,63 +88,44 @@ function AdminDashboardCreate() {
           </div>
         </div>
 
-        {/* Body Field with Formatting Toolbar */}
-        <div className={styles.field}>
-          <label className={styles.label}>Content Body</label>
-          <div className={styles.editorBox}>
-            <div className={styles.toolbar}>
-              <button type="button" className={styles.toolBtn} title="Bold"><Bold size={16} /></button>
-              <button type="button" className={styles.toolBtn} title="Italic"><Italic size={16} /></button>
-              <button type="button" className={styles.toolBtn} title="Underline"><Underline size={16} /></button>
-              <span className={styles.toolDivider}></span>
-              <button type="button" className={styles.toolBtn} title="Heading"><Type size={16} /></button>
-              <button type="button" className={styles.toolBtn} title="List"><List size={16} /></button>
-              <span className={styles.toolDivider}></span>
-              <button type="button" className={styles.toolBtn} title="Add Image" onClick={() => setIsModalOpen(true)}>
-                <ImageIcon size={16} />
-              </button>
-              <button type="button" className={styles.toolBtn} title="Add Link"><LinkIcon size={16} /></button>
-            </div>
-            <textarea
-              placeholder="Write your article or news content here..."
-              className={styles.textarea}
-              rows={8}
-              value={body}
-              onChange={(e) => setBody(e.target.value)}
-            />
-          </div>
+        {/* Formatting Toolbar */}
+        <div className={styles.toolbarBox}>
+          <button type="button" className={styles.toolBtn} title="Bold"><Bold size={16} /></button>
+          <button type="button" className={styles.toolBtn} title="Italic"><Italic size={16} /></button>
+          <button type="button" className={styles.toolBtn} title="Underline"><Underline size={16} /></button>
+          <button type="button" className={styles.toolBtn} title="Heading"><Type size={16} /></button>
+          <button type="button" className={styles.toolBtn} title="List"><List size={16} /></button>
+          <button type="button" className={styles.toolBtn} title="Add Image" onClick={() => setIsModalOpen(true)}>
+            <ImageIcon size={16} />
+          </button>
+          <button type="button" className={styles.toolBtn} title="Add Link"><LinkIcon size={16} /></button>
         </div>
 
-        {/* Upload Featured Image Button */}
+        {/* Content Body */}
         <div className={styles.field}>
-          <label className={styles.label}>Featured Image</label>
-          {uploadedImage ? (
-            <div className={styles.imagePreviewWrapper}>
-              <img src={uploadedImage} alt="Uploaded Preview" className={styles.imagePreview} />
-              <button
-                type="button"
-                className={styles.removeImgBtn}
-                onClick={() => setUploadedImage(null)}
-              >
-                <Trash2 size={16} /> Remove Image
-              </button>
-            </div>
-          ) : (
-            <button
-              type="button"
-              className={styles.uploadTriggerBtn}
-              onClick={() => setIsModalOpen(true)}
-            >
-              <UploadCloud size={20} />
-              <span>Upload Featured Image</span>
-            </button>
-          )}
+          <label className={styles.label}>Content Body</label>
+          <textarea
+            placeholder="Type something...."
+            className={styles.textarea}
+            rows={10}
+            value={body}
+            onChange={(e) => setBody(e.target.value)}
+          />
         </div>
 
         {/* Tags Selection */}
         <div className={styles.field}>
-          <label className={styles.label}>Tags (Select up to 3)</label>
-          <div className={styles.tagsWrapper}>
+          <label className={styles.label}>Tag (max 3)</label>
+          <div className={styles.tagsInputWrapper}>
+            <input
+              type="text"
+              placeholder="Plan name"
+              className={styles.input}
+              readOnly
+              value={tags.join(', ')}
+            />
+          </div>
+          <div className={styles.tagsOptions}>
             {TAG_OPTIONS.map((tag) => {
               const isSelected = tags.includes(tag);
               return (
@@ -162,6 +141,20 @@ function AdminDashboardCreate() {
             })}
           </div>
         </div>
+
+        {/* Image Preview Card if uploaded */}
+        {uploadedImage && (
+          <div className={styles.uploadedPreviewCard}>
+            <img src={uploadedImage} alt="Uploaded preview" className={styles.uploadedImg} />
+            <button
+              type="button"
+              className={styles.removeImgBtn}
+              onClick={() => setUploadedImage(null)}
+            >
+              <Trash2 size={16} />
+            </button>
+          </div>
+        )}
 
         {/* Form Actions */}
         <div className={styles.actions}>
@@ -183,7 +176,7 @@ function AdminDashboardCreate() {
 
       </div>
 
-      {/* Upload Modal */}
+      {/* Upload Modal Popup - Matches Figma Modal screenshot 1 */}
       {isModalOpen && (
         <div className={styles.modalOverlay} onClick={() => setIsModalOpen(false)}>
           <div
@@ -194,24 +187,29 @@ function AdminDashboardCreate() {
             onDrop={handleDrop}
           >
             <button className={styles.closeBtn} onClick={() => setIsModalOpen(false)}>
-              <X size={20} />
+              <X size={16} />
             </button>
-            <div className={styles.uploadIcon}>
-              <UploadCloud size={44} strokeWidth={1.5} color="#adb5bd" />
+
+            <div className={styles.modalUploadCircle}>
+              <UploadCloud size={24} color="#344054" />
             </div>
-            <p className={styles.uploadTitle}>Choose a file or drag &amp; drop it here</p>
-            <p className={styles.uploadSub}>PDF, JPG, JPEG, PNG &nbsp;•&nbsp; Max 5MB</p>
+
+            <p className={styles.modalTitle}>Choose a file or drag &amp; drop it here</p>
+            <p className={styles.modalSub}>PDF, JPG, JPEG, PNG . MAX (5MB)</p>
+
             <input
               type="file"
-              accept="image/*"
+              accept="image/*,.pdf"
               ref={fileInputRef}
               style={{ display: 'none' }}
               onChange={(e) => handleFileSelect(e.target.files[0])}
             />
-            <button className={styles.browseBtn} onClick={() => fileInputRef.current?.click()}>
+
+            <button className={styles.modalBrowseBtn} onClick={() => fileInputRef.current?.click()}>
               Browse File
             </button>
-            <p className={styles.uploadHint}>Recommended size: 1200×628px</p>
+
+            <p className={styles.modalHint}>Recommended size: 1200x628px</p>
           </div>
         </div>
       )}

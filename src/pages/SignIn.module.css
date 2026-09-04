@@ -2,40 +2,43 @@
   display: flex;
   min-height: 100vh;
   font-family: inherit;
+  background: #f8fafc;
 }
 
-/* Left branding panel - uses the Figma primary blue */
+/* Left branding panel - exact primary blue from Figma (#0084d4) */
 .leftPanel {
-  flex: 0 0 400px;
-  background: linear-gradient(145deg, #003580 0%, #0057d8 55%, #1a73e8 100%);
+  flex: 0 0 420px;
+  background: #0084d4;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 3rem;
+  padding: 3rem 2.5rem;
   position: relative;
   overflow: hidden;
 }
 
-/* Decorative circles in background */
+/* Subtle soft ambient glow instead of harsh circles */
 .leftPanel::before {
   content: '';
   position: absolute;
-  width: 400px;
-  height: 400px;
+  width: 350px;
+  height: 350px;
   border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.06);
-  top: -100px;
-  right: -120px;
+  background: rgba(255, 255, 255, 0.08);
+  top: -80px;
+  right: -100px;
+  pointer-events: none;
 }
 .leftPanel::after {
   content: '';
   position: absolute;
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
   border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.06);
-  bottom: -80px;
-  left: -80px;
+  background: rgba(0, 0, 0, 0.06);
+  bottom: -60px;
+  left: -60px;
+  pointer-events: none;
 }
 
 .brandContent {
@@ -45,42 +48,43 @@
 }
 
 .brandLogo {
-  width: 72px;
-  height: 72px;
+  width: 80px;
+  height: 80px;
   object-fit: contain;
-  margin-bottom: 1.5rem;
-  filter: brightness(0) invert(1);
+  margin-bottom: 1.25rem;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
 }
 
 .brandTitle {
   font-size: 2rem;
   font-weight: 800;
-  color: #fff;
-  letter-spacing: 0.02em;
-  margin-bottom: 0.5rem;
+  color: #ffffff;
+  letter-spacing: 0.01em;
+  margin-bottom: 0.4rem;
 }
 
 .brandSub {
   font-size: 0.9rem;
-  color: rgba(255,255,255,0.65);
+  color: rgba(255, 255, 255, 0.85);
   line-height: 1.5;
-  max-width: 240px;
+  max-width: 260px;
   margin: 0 auto;
+  font-weight: 500;
 }
 
 .brandDecor {
-  width: 40px;
+  width: 36px;
   height: 3px;
-  background: rgba(255,255,255,0.5);
+  background: rgba(255, 255, 255, 0.4);
   border-radius: 2px;
   margin: 1.25rem auto;
 }
 
 .brandQuote {
   font-size: 0.82rem;
-  color: rgba(255,255,255,0.55);
+  color: rgba(255, 255, 255, 0.75);
   line-height: 1.6;
-  max-width: 220px;
+  max-width: 240px;
   margin: 0 auto;
   text-align: center;
   font-style: italic;
@@ -92,18 +96,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f8f9fa;
+  background: #f8fafc;
   padding: 2rem;
 }
 
 .formBox {
   width: 100%;
   max-width: 420px;
-  background: #fff;
+  background: #ffffff;
   border-radius: 16px;
   padding: 2.5rem;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
-  border: 1px solid #e9ecef;
+  box-shadow: 0 4px 20px rgba(16, 24, 40, 0.06);
+  border: 1px solid #eaecf0;
   position: relative;
 }
 
@@ -113,17 +117,17 @@
   gap: 0.4rem;
   font-size: 0.85rem;
   font-weight: 600;
-  color: #007bff;
+  color: #0084d4;
   text-decoration: none;
   margin-bottom: 1.5rem;
   padding: 0.4rem 0.8rem;
-  background: #eef6ff;
+  background: #f0f7ff;
   border-radius: 6px;
   transition: background 0.15s, color 0.15s;
 }
 .backButton:hover {
-  background: #dbebff;
-  color: #0056b3;
+  background: #e1eeff;
+  color: #006bb3;
 }
 
 .formHeader {
@@ -133,13 +137,13 @@
 .formTitle {
   font-size: 1.6rem;
   font-weight: 700;
-  color: #212529;
+  color: #101828;
   margin-bottom: 6px;
 }
 
 .formSub {
   font-size: 0.88rem;
-  color: #6c757d;
+  color: #667085;
 }
 
 .form {
@@ -157,24 +161,24 @@
 .label {
   font-size: 0.85rem;
   font-weight: 600;
-  color: #343a40;
+  color: #344054;
 }
 
 .input {
   padding: 0.75rem 1rem;
-  border: 1.5px solid #dee2e6;
+  border: 1px solid #eaecf0;
   border-radius: 8px;
   font-size: 0.92rem;
   font-family: inherit;
-  color: #212529;
-  background: #fdfdfd;
+  color: #101828;
+  background: #f9fafb;
   transition: border-color 0.2s, box-shadow 0.2s;
   width: 100%;
 }
 .input:focus {
   outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 0 3px rgba(0,123,255,0.08);
+  border-color: #0084d4;
+  box-shadow: 0 0 0 3px rgba(0, 132, 212, 0.1);
   background: #fff;
 }
 
@@ -192,19 +196,19 @@
   transform: translateY(-50%);
   background: transparent;
   border: none;
-  color: #adb5bd;
+  color: #98a2b3;
   cursor: pointer;
   display: flex;
   align-items: center;
   padding: 0;
   transition: color 0.15s;
 }
-.eyeBtn:hover { color: #495057; }
+.eyeBtn:hover { color: #344054; }
 
 .errorMsg {
-  background: #fff5f5;
-  border: 1px solid #ffc9c9;
-  color: #e03131;
+  background: #fef3f2;
+  border: 1px solid #fda29b;
+  color: #b42318;
   font-size: 0.82rem;
   padding: 0.7rem 1rem;
   border-radius: 8px;
@@ -213,8 +217,8 @@
 }
 
 .submitBtn {
-  background: #007bff;
-  color: #fff;
+  background: #0084d4;
+  color: #ffffff;
   border: none;
   padding: 0.8rem;
   border-radius: 8px;
@@ -226,7 +230,7 @@
   margin-top: 0.25rem;
   width: 100%;
 }
-.submitBtn:hover:not(:disabled) { background: #0062cc; }
+.submitBtn:hover:not(:disabled) { background: #006bb3; }
 .submitBtn:active:not(:disabled) { transform: scale(0.99); }
 .submitBtn:disabled { opacity: 0.7; cursor: not-allowed; }
 
@@ -236,9 +240,9 @@
   .leftPanel {
     flex: none;
     padding: 2.5rem 1.5rem;
-    min-height: 200px;
+    min-height: 220px;
   }
-  .brandLogo { width: 52px; height: 52px; margin-bottom: 1rem; }
+  .brandLogo { width: 60px; height: 60px; margin-bottom: 1rem; }
   .brandTitle { font-size: 1.5rem; }
   .rightPanel { padding: 1.5rem 1rem; }
   .formBox { padding: 1.75rem 1.25rem; }
