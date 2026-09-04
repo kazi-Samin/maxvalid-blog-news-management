@@ -1,4 +1,4 @@
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate, Link } from 'react-router-dom';
 import { LayoutGrid, Users, FileText, Settings, User, LogOut } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import logoImage from '../../assets/logo.png';
@@ -18,7 +18,9 @@ function AdminLayout() {
       {/* Sidebar */}
       <aside className={styles.sidebar}>
         <div className={styles.sidebarHeader}>
-          <img src={logoImage} alt="Logo" className={styles.logo} />
+          <Link to="/" title="Go to main website">
+            <img src={logoImage} alt="Bandhan Paribar Logo" className={styles.logo} />
+          </Link>
         </div>
 
         <nav className={styles.navMenu}>
