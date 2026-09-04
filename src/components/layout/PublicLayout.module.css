@@ -1,0 +1,271 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logoImage {
+  height: 40px;
+  width: auto;
+}
+
+.nav {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.navLink {
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: opacity 0.2s;
+}
+
+.navLink:hover {
+  opacity: 0.8;
+}
+
+.active {
+  font-weight: 600;
+}
+
+.dropdownIcon {
+  font-size: 0.6rem;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.langToggle {
+  display: flex;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.langBtn, .langBtnActive {
+  background: transparent;
+  border: none;
+  color: #fff;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.langBtnActive {
+  background: #fff;
+  color: #000;
+}
+
+.signInBtn {
+  background: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 6px 16px;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+.signInBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.donateBtn {
+  background: var(--primary-color);
+  border: none;
+  color: #fff;
+  padding: 6px 16px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+.donateBtn:hover {
+  background: #0056b3;
+}
+
+.mobileMenuBtn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: #fff;
+}
+
+.main {
+  flex: 1;
+}
+
+/* Footer styles */
+.footer {
+  background-color: #1a1a1a;
+  color: #fff;
+  padding: 4rem 1.5rem 2rem;
+  margin-top: auto;
+}
+
+.footerContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 4rem;
+}
+
+.footerBrand {
+  flex: 1;
+  max-width: 400px;
+}
+
+.footerLogo {
+  height: 50px;
+  margin-bottom: 1rem;
+}
+
+.footerBrand p {
+  color: #999;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.footerLinksGroup {
+  display: flex;
+  gap: 4rem;
+}
+
+.footerCol {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.footerCol h4 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.footerCol a {
+  color: #999;
+  font-size: 0.85rem;
+  transition: color 0.2s;
+}
+
+.footerCol a:hover {
+  color: #fff;
+}
+
+.copyright {
+  text-align: center;
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #333;
+  color: #666;
+  font-size: 0.8rem;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .nav {
+    display: none;
+  }
+  .mobileMenuBtn {
+    display: block;
+  }
+  .navOpen {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #1a1a1a;
+    padding: 2rem;
+  }
+  .footerContainer {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .footerLinksGroup {
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
+
+/* Mobile Bottom Navigation */
+.mobileBottomNav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border-top: 1px solid #eaeaea;
+  z-index: 200;
+  padding: 0.5rem 0;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+  justify-content: space-around;
+  align-items: center;
+}
+
+.bottomNavLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: #adb5bd;
+  text-decoration: none;
+  font-size: 0.75rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
+
+.bottomNavLink span {
+  display: none; /* Hide text by default */
+}
+
+.activeBottomNav {
+  background: var(--primary-color);
+  color: #fff;
+  flex-direction: row;
+  padding: 0.5rem 1.25rem;
+}
+
+.activeBottomNav span {
+  display: inline;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .mobileBottomNav {
+    display: flex;
+  }
+  .footer {
+    padding-bottom: 6rem; /* Make room for bottom nav */
+  }
+}

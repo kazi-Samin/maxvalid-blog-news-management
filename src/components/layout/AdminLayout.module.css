@@ -1,0 +1,154 @@
+.adminContainer {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f8f9fa; /* Light gray background for main area */
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: 260px;
+  background-color: #f4f5f7; /* Very light gray sidebar */
+  border-right: 1px solid #e9ecef;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 100;
+}
+
+.sidebarHeader {
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 32px;
+}
+
+.navMenu {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+  flex: 1;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  color: #495057;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.navItem:hover {
+  background-color: #e9ecef;
+  color: #212529;
+}
+
+.active {
+  background-color: var(--primary-color);
+  color: #fff;
+  border-radius: 0 8px 8px 0;
+  margin-right: 1rem; /* Indent the right side like the design */
+}
+
+.active:hover {
+  background-color: #0056b3;
+  color: #fff;
+}
+
+/* Sidebar Footer */
+.sidebarFooter {
+  padding: 1.5rem;
+  border-top: 1px solid #e9ecef;
+}
+
+.userProfile {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding: 0.5rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  background-color: #f1f3f5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #495057;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.userName {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #212529;
+  margin-bottom: 2px;
+}
+
+.userEmail {
+  font-size: 0.75rem;
+  color: #6c757d;
+}
+
+.logoutBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: none;
+  color: #495057;
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.logoutBtn:hover {
+  color: #dc3545; /* Red on hover */
+}
+
+/* Main Content Area */
+.mainContent {
+  flex: 1;
+  margin-left: 260px; /* Offset by sidebar width */
+  padding: 2.5rem;
+  background-color: #fff; /* Main content area has a white/very light background */
+  min-height: 100vh;
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 80px; /* Collapse sidebar on smaller screens */
+  }
+  .navItem span, .sidebarHeader img, .userInfo, .logoutBtn span {
+    display: none;
+  }
+  .active {
+    margin-right: 0;
+    border-radius: 0;
+  }
+  .mainContent {
+    margin-left: 80px;
+  }
+}
