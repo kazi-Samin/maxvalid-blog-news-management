@@ -1,5 +1,6 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import { LayoutGrid, Users, FileText, Settings, User, LogOut } from 'lucide-react';
+import logoImage from '../../assets/logo.png';
 import styles from './AdminLayout.module.css';
 
 function AdminLayout() {
@@ -8,7 +9,7 @@ function AdminLayout() {
       {/* Sidebar */}
       <aside className={styles.sidebar}>
         <div className={styles.sidebarHeader}>
-          <img src="/vite.svg" alt="Logo" className={styles.logo} />
+          <img src={logoImage} alt="Logo" className={styles.logo} />
         </div>
 
         <nav className={styles.navMenu}>

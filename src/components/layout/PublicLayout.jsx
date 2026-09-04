@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import logoImage from '../../assets/logo.png';
 import styles from './PublicLayout.module.css';
 
 function PublicLayout() {
@@ -13,7 +14,7 @@ function PublicLayout() {
         <div className={styles.container}>
           <div className={styles.logo}>
             <Link to="/">
-              <img src="/vite.svg" alt="MaxValid Logo" className={styles.logoImage} />
+              <img src={logoImage} alt="MaxValid Logo" className={styles.logoImage} />
             </Link>
           </div>
           
@@ -52,7 +53,7 @@ function PublicLayout() {
       <footer className={styles.footer}>
         <div className={styles.footerContainer}>
           <div className={styles.footerBrand}>
-            <img src="/vite.svg" alt="Logo" className={styles.footerLogo} />
+            <img src={logoImage} alt="Logo" className={styles.footerLogo} />
             <p>This institution is striving to build an ideal welfare society by following the footsteps of the Prophet of Humanity, the Messenger of Human Freedom and Peace, the ideal of human service, the Prophet Muhammad (PBUH), in the service of humanity.</p>
           </div>
           

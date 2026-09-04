@@ -55,6 +55,27 @@ const NEWS_DATA = [
     description: "Breaking all past records to bring Eid smiles to the faces of the country's underprivileged and disaster-affected people, the social...",
     date: "June 25, 2026",
     image: "/src/assets/span.minimal__image__root (5).png"
+  },
+  {
+    id: 7,
+    title: "Youth Empowerment Workshop Held Successfully",
+    description: "The workshop focused on skill development and leadership training, empowering young participants from rural areas.",
+    date: "August 1, 2026",
+    image: "/src/assets/span.minimal__image__root (1).png"
+  },
+  {
+    id: 8,
+    title: "3rd Imams' Training Completed",
+    description: "The 3rd Imams' Training by the As-Sunnah Foundation has been successfully completed with the participation of selected Imams and...",
+    date: "July 11, 2026",
+    image: "/src/assets/span.minimal__image__root (4).png"
+  },
+  {
+    id: 9,
+    title: "Qurbani for All 2026 Project Completed",
+    description: "Breaking all past records to bring Eid smiles to the faces of the country's underprivileged and disaster-affected people, the social...",
+    date: "June 25, 2026",
+    image: "/src/assets/span.minimal__image__root (5).png"
   }
 ];
 
