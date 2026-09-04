@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Search } from 'lucide-react';
+import { useDebounce } from '../hooks/useDebounce';
 import NewsCard from '../components/ui/NewsCard';
 import Pagination from '../components/ui/Pagination';
 import heroImage from '../assets/image 96.png';
@@ -7,8 +8,6 @@ import imgFeatured from '../assets/span.minimal__image__root.png';  // Tree plan
 import imgFloodBoat from '../assets/span.minimal__image__root (1).png';  // Orange rescuers carrying boat
 import imgImams from '../assets/span.minimal__image__root (2).png';      // Kids No Smoking blue uniform
 import imgQurbani from '../assets/span.minimal__image__root (3).png';    // Yellow helmet woman in flood
-import imgQurbani2 from '../assets/span.minimal__image__root (4).png';   // Yellow helmet wider shot
-import imgFloodBoat2 from '../assets/span.minimal__image__root (5).png'; // Orange rescuers wider
 import styles from './PublicNews.module.css';
 
 const CATEGORIES = [
@@ -28,21 +27,21 @@ const NEWS_DATA = [
     title: "Relief distribution among flood victims in Greater...",
     description: "A severe flood hit Chittagong in the first week of this month. Extensive areas in Chittagong, Cox's Bazar, and Bandarban were...",
     date: "July 22, 2026",
-    image: imgFloodBoat  // orange rescuers boat in flood
+    image: imgFloodBoat
   },
   {
     id: 2,
     title: "3rd Imams' Training Completed",
     description: "The 3rd Imams' Training by the As-Sunnah Foundation has been successfully completed with the participation of selected Imams and...",
     date: "July 11, 2026",
-    image: imgImams      // kids No Smoking blue uniform
+    image: imgImams
   },
   {
     id: 3,
     title: "Qurbani for All 2026 Project Completed",
     description: "Breaking all past records to bring Eid smiles to the faces of the country's underprivileged and disaster-affected people, the social...",
     date: "June 25, 2026",
-    image: imgQurbani    // yellow helmet woman in flood
+    image: imgQurbani
   },
   // --- Row 2 ---
   {
@@ -50,7 +49,7 @@ const NEWS_DATA = [
     title: "Community Health Camp In Sylhet Organized",
     description: "A free health camp was organized in Sylhet, providing essential medical checkups and medicine to over 500 underprivileged families...",
     date: "August 5, 2026",
-    image: imgFeatured   // tree planting / community scene
+    image: imgFeatured
   },
   {
     id: 5,
@@ -64,15 +63,15 @@ const NEWS_DATA = [
     title: "Qurbani for All 2026 Project Completed",
     description: "Breaking all past records to bring Eid smiles to the faces of the country's underprivileged and disaster-affected people, the social...",
     date: "June 25, 2026",
-    image: imgQurbani2   // yellow helmet wider shot
+    image: imgQurbani
   },
   // --- Row 3 ---
   {
     id: 7,
-    title: "Youth Empowerment Workshop Held Successfully",
-    description: "The workshop focused on skill development and leadership training, empowering young participants from various communities.",
-    date: "August 1, 2026",
-    image: imgFloodBoat2 // orange rescuers wider view
+    title: "Relief distribution among flood victims in Greater...",
+    description: "A severe flood hit Chittagong in the first week of this month. Extensive areas in Chittagong, Cox's Bazar, and Bandarban were...",
+    date: "July 22, 2026",
+    image: imgFloodBoat
   },
   {
     id: 8,
@@ -91,8 +90,17 @@ const NEWS_DATA = [
 ];
 
 function PublicNews() {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [activeCategory, setActiveCategory] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState("All Gallery & Media");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const debouncedSearchTerm = useDebounce(searchTerm, 300);
+
+  const filteredNews = NEWS_DATA.filter((item) => {
+    const matchesCategory = selectedCategory === "All Gallery & Media" || true;
+    const matchesSearch = item.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
+                          item.description.toLowerCase().includes(debouncedSearchTerm.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <div className={styles.page}>
@@ -140,8 +148,8 @@ function PublicNews() {
                 {CATEGORIES.map((cat, index) => (
                   <li
                     key={index}
-                    className={activeCategory === index ? styles.activeCategory : ''}
-                    onClick={() => setActiveCategory(index)}
+                    className={selectedCategory === cat ? styles.activeCategory : ''}
+                    onClick={() => setSelectedCategory(cat)}
                   >
                     {cat}
                   </li>
@@ -150,7 +158,7 @@ function PublicNews() {
             </aside>
 
             <div className={styles.articlesGrid}>
-              {NEWS_DATA.map((news) => (
+              {filteredNews.map((news) => (
                 <NewsCard
                   key={news.id}
                   title={news.title}
@@ -162,7 +170,7 @@ function PublicNews() {
             </div>
           </div>
 
-          <Pagination currentPage={1} totalPages={512} />
+          <Pagination currentPage={currentPage} onPageChange={(p) => setCurrentPage(p)} totalPages={512} />
 
         </div>
       </section>
