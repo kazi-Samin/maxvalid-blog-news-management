@@ -1,9 +1,15 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { LayoutGrid, Users, FileText, Settings, User, LogOut } from 'lucide-react';
 import logoImage from '../../assets/logo.png';
 import styles from './AdminLayout.module.css';
 
 function AdminLayout() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    navigate('/signin');
+  };
+
   return (
     <div className={styles.adminContainer}>
       {/* Sidebar */}
@@ -56,7 +62,7 @@ function AdminLayout() {
               <p className={styles.userEmail}>superadmin@kichukori.com</p>
             </div>
           </div>
-          <button className={styles.logoutBtn}>
+          <button className={styles.logoutBtn} onClick={handleLogout}>
             <LogOut size={20} />
             <span>Log Out</span>
           </button>
