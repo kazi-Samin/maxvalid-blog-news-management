@@ -1,47 +1,93 @@
-# maxvalid-blog-news-management
+# MaxValid Frontend Development Internship Assignment
 
-A responsive React application built for the MaxValid Frontend Development Internship assignment.
+## Project Overview
+This project is a responsive, modern React application built for the **MaxValid Frontend Development Internship Assignment**. It implements a complete **Blog & News Management** platform based on the provided Figma/PDF design specifications, featuring a public-facing news portal and an internal admin management dashboard.
 
-## Short Description
-This project implements a fully responsive "Blog & News Management" platform based on a provided Figma design. It features a public-facing news article portal and an internal admin dashboard for managing content. The implementation focuses on clean architecture, reusable components, and modern CSS practices without relying on heavy external styling frameworks.
+The application is engineered with a clean architecture, reusable components, proper state management, client-side routing, and modular CSS without relying on heavy external styling frameworks.
 
-## Technologies Used
-- **React.js** (JavaScript ES6+)
-- **Vite** (Build tool and dev server)
-- **React Router v6** (Client-side routing)
-- **Vanilla CSS & CSS Modules** (Scoped, maintainable styling without Tailwind)
-- **Lucide React** (Lightweight SVG icons)
+---
 
-## Main Features
-- **Public News Portal**: A responsive grid layout featuring a hero section, search bar, side navigation filters, and article cards.
-- **Admin Dashboard Layout**: A persistent sidebar navigation with active state tracking.
-- **Content Management Table**: A data table displaying mock content with pagination UI.
-- **Content Creation Form**: A detailed form featuring character counts, a mock rich-text toolbar, tag inputs, and a custom image upload modal.
-- **Fully Responsive**: Adapts seamlessly across Desktop, Tablet, and Mobile devices (including a custom mobile bottom navigation bar).
-- **Semantic & Accessible**: Uses semantic HTML5 tags and adheres to structural best practices.
+## Features
 
-## Project Structure Overview
+### 🌐 Public Portal & News
+- **Responsive Public Homepage**: Hero section with dark overlay, background image, and clear typography.
+- **News & Articles Page**: Clean layout showcasing featured news and a 3x3 grid (9 cards per page).
+- **Featured News Banner**: Styled card highlighting priority articles.
+- **Debounced Search**: Functional search input with a `300ms` `useDebounce` hook filtering title and content.
+- **Category Sidebar Filtering**: Filter articles across 17 categories; resets pagination slice to Page 1 upon selection.
+- **Pagination**: Interactive page numbers, next/previous buttons, and active page highlighting.
+- **Responsive Mobile Navigation**: Top header hamburger drawer toggle + sticky mobile bottom navigation bar with 5 items (`Home`, `Donate`, `Alerts`, `Partner`, `Articles`).
+- **Footer**: Multi-column links for Company, Donate, and Others with exact copyright notice (`© 2026 Bandhan Paribar. All rights reserved.`).
+
+### 🔐 Authentication & Admin Management
+- **Sign In**: Split-panel layout with Bandhan Paribar primary blue (`#0084d4`) branding, password visibility toggle, error feedback, and a styled **← Back to Home** button.
+- **Frontend Mock Authentication**: `AuthContext` provider and `useAuth()` custom hook with `localStorage` persistence.
+- **Protected Admin Routes**: `ProtectedRoute` wrapper guarding `/admin/*` routes and redirecting unauthenticated users to `/signin`.
+- **Admin Dashboard Layout**: Sidebar navigation displaying active states and Super Admin profile (`superadmin@kichukori.com`).
+- **Blog & News Management Table**: Data table displaying content title, two-line published date & time (`Jun 29, 2026` / `10:30 AM`), source link, and three-dots action dropdown (`View`, `Edit`, `Delete`).
+- **Admin Search**: Real-time content filtering in the admin table.
+
+### 📝 Create New Content & Upload Modal
+- **Create New Content Form**: Comprehensive form with breadcrumb navigation and field validation.
+- **64-Character Title Limit**: Dynamic character counter (`0/64`) and hard length enforcement.
+- **Rich Text Toolbar**: Formatting buttons (`Bold`, `Italic`, `Underline`, `Heading`, `List`, `Link`) appending markdown formatting tags to the textarea.
+- **Tag Selection**: Interactive tag chips supporting addition, removal, and strict 3-tag limit enforcement.
+- **Drag & Drop Image Upload Modal**: Dimmed backdrop modal supporting file selection and Drag & Drop file reading.
+- **File Validation**: Accepts `PDF`, `JPG`, `JPEG`, and `PNG` file formats.
+- **5MB File Size Limit**: Strict JavaScript validation rejecting files larger than 5MB with an error alert box.
+- **Image Preview**: Displays uploaded file preview with a remove option.
+- **Submission Loading State**: Form submit button displays `"Creating..."` and disables actions during submission.
+
+---
+
+## Tech Stack
+- **Core Library**: React 19 (JavaScript ES6+)
+- **Build Tool & Dev Server**: Vite 8
+- **Routing**: React Router v6 (`react-router-dom`)
+- **Styling**: Modern CSS Modules (`.module.css`) for scoped, zero-conflict styling
+- **Icons**: Lucide React (`lucide-react`)
+- **Linter**: Oxlint (`oxlint`)
+
+---
+
+## Project Structure
 ```text
-src/
-├── assets/                  # Static assets (images, icons)
-├── components/
-│   ├── layout/              # Shared layouts (AdminLayout, PublicLayout)
-│   └── ui/                  # Reusable UI elements (NewsCard, Pagination)
-├── pages/                   # Main page components
-│   ├── AdminDashboardCreate.jsx
-│   ├── AdminDashboardList.jsx
-│   └── PublicNews.jsx
-├── styles/                  # Global styles (index.css)
-├── App.jsx                  # Route definitions
-└── main.jsx                 # Application entry point
+c:/Projects/Intern Assignment/
+├── dist/                    # Compiled production build output
+├── public/                  # Public static assets
+├── src/
+│   ├── assets/              # Figma image assets & Bandhan Paribar logo
+│   ├── components/
+│   │   ├── layout/          # Shared layouts (AdminLayout, PublicLayout, ProtectedRoute)
+│   │   └── ui/              # Reusable UI elements (NewsCard, Pagination)
+│   ├── context/             # AuthContext provider & useAuth hook
+│   ├── data/                # Central mock datasets (articles.js)
+│   ├── hooks/               # Custom hooks (useDebounce.js)
+│   ├── pages/               # Page components (PublicNews, SignIn, AdminDashboardList, AdminDashboardCreate, PlaceholderPage)
+│   ├── App.css              # App styling resets
+│   ├── App.jsx              # Client-side router configuration
+│   ├── index.css            # Global CSS variables & font imports
+│   └── main.jsx             # React entry point
+├── .gitignore               # Git ignore rules
+├── package.json             # Dependencies and npm scripts
+├── README.md                # Project documentation
+└── vite.config.js           # Vite configuration
 ```
 
-## Installation Instructions
+---
+
+## Getting Started
+
+### Prerequisites
+- Node.js (v18+ recommended)
+- npm or yarn
+
+### Installation
 1. Clone the repository:
    ```bash
    git clone https://github.com/kazi-Samin/maxvalid-blog-news-management.git
    ```
-2. Navigate into the directory:
+2. Navigate into the project folder:
    ```bash
    cd maxvalid-blog-news-management
    ```
@@ -50,32 +96,77 @@ src/
    npm install
    ```
 
-## Development/Run Instructions
-To start the local development server:
+### Run Locally
+To launch the development server:
 ```bash
 npm run dev
 ```
-Open [http://localhost:5173](http://localhost:5173) in your browser to view the application.
+Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-## Production Build Instructions
-To create a production-ready build:
+### Production Build
+To generate an optimized production bundle:
 ```bash
 npm run build
 ```
-The optimized files will be generated in the `dist` folder. To preview the build locally, run:
+To preview the production build locally:
 ```bash
 npm run preview
 ```
 
-## Important Implementation Decisions
-- **Styling Choice**: I deliberately chose Vanilla CSS and CSS Modules over Tailwind CSS to demonstrate core CSS competency, maintainability, and strict adherence to the assignment's emphasis on "Modern CSS" and "Clean project structure" without over-reliance on utility frameworks.
-- **Responsiveness**: CSS Grid was used for the article layout, while Flexbox handles internal component alignment. A mobile-specific bottom navigation bar replaces the standard desktop navigation on small screens, matching the Figma design perfectly.
-- **Mock Data**: Since no external API endpoint was provided, mock data arrays are used within the page components to simulate data fetching.
-- **Routing**: `react-router-dom` handles switching between the Public view (`/`) and Admin views (`/admin/*`), using nested `Outlet` components for persistent layouts.
+---
+
+## Demo Credentials
+
+Use the following demo credentials to sign in and access the admin dashboard:
+
+- **Email**: `superadmin@kichukori.com`
+- **Password**: `admin123`
+
+*Note: This is frontend mock authentication designed specifically for assignment evaluation.*
+
+---
+
+## Implemented Routes
+
+### Public Routes
+- `/` or `/news` — Public News & Articles portal (Home)
+- `/signin` — Sign In page
+- `/donate`, `/events`, `/about`, `/gallery`, `/partnership`, `/our-work`, `/blood-donate`, `/blood-request`, `/terms`, `/privacy`, `/contact` — Functional placeholder routes with Bandhan Paribar branding and **"← Return to Home"** buttons.
+
+### Protected Admin Routes
+- `/admin` or `/admin/blog-news` — Blog & News Management content table
+- `/admin/blog-news/create` — Create New Blog & News form and upload modal
+- `/admin/dashboard`, `/admin/users`, `/admin/settings` — Functional admin sub-routes
+
+---
+
+## Validation & UX Summary
+- **Title Field**: Required input, 64-character limit, `0/64` dynamic counter.
+- **Tag Selection**: Required input, maximum 3 tags limit.
+- **File Upload Modal**: Accept format check (`PDF`, `JPG`, `JPEG`, `PNG`), strict `5MB` size limit rejection with user error alert.
+- **Form Submission**: Submitting state (`"Creating..."`), button disable to prevent duplicate submissions.
+- **Search & Filter**: Real-time debounced search (`useDebounce`), zero-results empty state messages.
+
+---
+
+## Testing & Verification
+- ✅ **Production Build**: Verified with `npm run build` (0 errors, compiled in 3.66s).
+- ✅ **Linter**: Verified with `npx oxlint` (0 errors).
+- ✅ **Browser Console**: Clean execution with zero console runtime errors.
+- ✅ **Responsive Testing**: Verified across 1440px, 1024px, 768px, 390px, and 375px viewports.
+
+---
+
+## Design Reference
+Implemented in accordance with the provided Figma design specs for the **MaxValid Frontend Development Internship Assignment**.
+
+---
 
 ## Deployment Information
-This project is deployment-ready. To deploy on platforms like **Vercel** or **Netlify**:
-1. Connect your GitHub repository to the platform.
-2. Ensure the framework preset is set to **Vite**.
-3. Build command: `npm run build`
-4. Output directory: `dist`
+- **Live Deployment URL**: *Pending deployment (e.g. Vercel/Netlify)*
+- **GitHub Repository**: [https://github.com/kazi-Samin/maxvalid-blog-news-management](https://github.com/kazi-Samin/maxvalid-blog-news-management)
+
+---
+
+## Notes
+Mock data and local state management (`localStorage`) are utilized as no backend API endpoint was provided by the assignment guidelines.

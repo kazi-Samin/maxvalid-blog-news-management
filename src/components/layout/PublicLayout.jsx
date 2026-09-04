@@ -12,12 +12,13 @@ function PublicLayout() {
   const location = useLocation();
   const { isAuthenticated, logout } = useAuth();
 
-  const isNewsActive = location.pathname === '/' || location.pathname === '/news';
+  const isHomeOrNews = location.pathname === '/' || location.pathname === '/news';
+  const isLightPage = !isHomeOrNews;
 
   return (
     <div className={styles.layout}>
-      {/* Header overlaid on Hero */}
-      <header className={styles.header}>
+      {/* Header overlaid on Hero for Home/News, solid/light pill for subpages */}
+      <header className={isLightPage ? `${styles.header} ${styles.headerLight}` : styles.header}>
         <div className={styles.container}>
           <div className={styles.logo}>
             <Link to="/">
@@ -31,7 +32,7 @@ function PublicLayout() {
             <Link to="/events" className={location.pathname === '/events' ? `${styles.navLink} ${styles.active}` : styles.navLink}>Events</Link>
             <Link to="/about" className={location.pathname === '/about' ? `${styles.navLink} ${styles.active}` : styles.navLink}>About Us <span className={styles.dropdownIcon}>▼</span></Link>
             <Link to="/gallery" className={location.pathname === '/gallery' ? `${styles.navLink} ${styles.active}` : styles.navLink}>Gallery</Link>
-            <Link to="/news" className={isNewsActive ? `${styles.navLink} ${styles.active}` : styles.navLink}>News &amp; Articles <span className={styles.dropdownIcon}>▼</span></Link>
+            <Link to="/news" className={location.pathname === '/news' ? `${styles.navLink} ${styles.active}` : styles.navLink}>News &amp; Articles <span className={styles.dropdownIcon}>▼</span></Link>
             <Link to="/partnership" className={location.pathname === '/partnership' ? `${styles.navLink} ${styles.active}` : styles.navLink}>Partnership</Link>
           </nav>
 
@@ -142,7 +143,7 @@ function PublicLayout() {
           <span className={styles.mobileNavIcon}>🤝</span>
           <span>Partner</span>
         </Link>
-        <Link to="/news" className={isNewsActive ? `${styles.mobileNavItem} ${styles.mobileNavActive}` : styles.mobileNavItem}>
+        <Link to="/news" className={location.pathname === '/news' ? `${styles.mobileNavItem} ${styles.mobileNavActive}` : styles.mobileNavItem}>
           <span className={styles.mobileNavIcon}>📰</span>
           <span>Articles</span>
         </Link>
