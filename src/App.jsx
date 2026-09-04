@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import PublicLayout from './components/layout/PublicLayout';
 import AdminLayout from './components/layout/AdminLayout';
 import PublicNews from './pages/PublicNews';
+import SignIn from './pages/SignIn';
 import AdminDashboardList from './pages/AdminDashboardList';
 import AdminDashboardCreate from './pages/AdminDashboardCreate';
 import './App.css';
@@ -14,6 +15,9 @@ function App() {
         <Route index element={<PublicNews />} />
         <Route path="news" element={<Navigate to="/" replace />} />
       </Route>
+
+      {/* Sign In */}
+      <Route path="/signin" element={<SignIn />} />
 
       {/* Admin Dashboard Routes */}
       <Route path="/admin" element={<AdminLayout />}>

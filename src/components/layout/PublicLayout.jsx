@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import logoImage from '../../assets/logo.png';
 import styles from './PublicLayout.module.css';
 
 function PublicLayout() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className={styles.layout}>
@@ -33,7 +34,7 @@ function PublicLayout() {
               <button className={styles.langBtnActive}>EN</button>
               <button className={styles.langBtn}>BN</button>
             </div>
-            <button className={styles.signInBtn}>Sign In</button>
+            <button className={styles.signInBtn} onClick={() => navigate('/signin')}>Sign In</button>
             <button className={styles.donateBtn}>Donate</button>
             
             <button 
@@ -60,7 +61,7 @@ function PublicLayout() {
           <div className={styles.footerLinksGroup}>
             <div className={styles.footerCol}>
               <h4>Company</h4>
-              <Link to="#">Home</Link>
+              <Link to="/">Home</Link>
               <Link to="#">About Us</Link>
               <Link to="#">Our Work</Link>
               <Link to="#">Gallery</Link>
@@ -68,20 +69,21 @@ function PublicLayout() {
             </div>
             <div className={styles.footerCol}>
               <h4>Donate</h4>
-              <Link to="#">Donate</Link>
+              <Link to="#">Contact</Link>
               <Link to="#">Blood Donate</Link>
-              <Link to="#">Blood Request</Link>
+              <Link to="#">Broad Resource</Link>
             </div>
             <div className={styles.footerCol}>
               <h4>Others</h4>
               <Link to="#">Contact</Link>
-              <Link to="#">Terms of Conditions</Link>
+              <Link to="#">Our Work</Link>
+              <Link to="#">Our Values</Link>
               <Link to="#">Privacy Policy</Link>
             </div>
           </div>
         </div>
         <div className={styles.copyright}>
-          © 2026 Bandhan Poribar. All rights reserved
+          &copy; 2026 MaxValid. All rights reserved.
         </div>
       </footer>
 
