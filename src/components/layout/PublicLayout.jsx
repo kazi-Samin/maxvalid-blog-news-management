@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Outlet, Link, useNavigate } from 'react-router-dom';
+import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import logoImage from '../../assets/logo.png';
@@ -7,8 +7,12 @@ import styles from './PublicLayout.module.css';
 
 function PublicLayout() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [lang, setLang] = useState('EN');
   const navigate = useNavigate();
+  const location = useLocation();
   const { isAuthenticated, logout } = useAuth();
+
+  const isNewsActive = location.pathname === '/' || location.pathname === '/news';
 
   return (
     <div className={styles.layout}>
@@ -22,19 +26,29 @@ function PublicLayout() {
           </div>
           
           <nav className={`${styles.nav} ${isMobileMenuOpen ? styles.navOpen : ''}`}>
-            <Link to="/" className={styles.navLink}>Home</Link>
-            <Link to="#" className={styles.navLink}>Donate <span className={styles.dropdownIcon}>▼</span></Link>
-            <Link to="#" className={styles.navLink}>Events</Link>
-            <Link to="#" className={styles.navLink}>About Us <span className={styles.dropdownIcon}>▼</span></Link>
-            <Link to="#" className={styles.navLink}>Gallery</Link>
-            <Link to="/" className={`${styles.navLink} ${styles.active}`}>News & Articles <span className={styles.dropdownIcon}>▼</span></Link>
-            <Link to="#" className={styles.navLink}>Partnership</Link>
+            <Link to="/" className={location.pathname === '/' ? `${styles.navLink} ${styles.active}` : styles.navLink}>Home</Link>
+            <Link to="/donate" className={location.pathname === '/donate' ? `${styles.navLink} ${styles.active}` : styles.navLink}>Donate <span className={styles.dropdownIcon}>▼</span></Link>
+            <Link to="/events" className={location.pathname === '/events' ? `${styles.navLink} ${styles.active}` : styles.navLink}>Events</Link>
+            <Link to="/about" className={location.pathname === '/about' ? `${styles.navLink} ${styles.active}` : styles.navLink}>About Us <span className={styles.dropdownIcon}>▼</span></Link>
+            <Link to="/gallery" className={location.pathname === '/gallery' ? `${styles.navLink} ${styles.active}` : styles.navLink}>Gallery</Link>
+            <Link to="/news" className={isNewsActive ? `${styles.navLink} ${styles.active}` : styles.navLink}>News &amp; Articles <span className={styles.dropdownIcon}>▼</span></Link>
+            <Link to="/partnership" className={location.pathname === '/partnership' ? `${styles.navLink} ${styles.active}` : styles.navLink}>Partnership</Link>
           </nav>
 
           <div className={styles.headerActions}>
             <div className={styles.langToggle}>
-              <button className={styles.langBtnActive}>EN</button>
-              <button className={styles.langBtn}>BN</button>
+              <button
+                className={lang === 'EN' ? styles.langBtnActive : styles.langBtn}
+                onClick={() => setLang('EN')}
+              >
+                EN
+              </button>
+              <button
+                className={lang === 'BN' ? styles.langBtnActive : styles.langBtn}
+                onClick={() => setLang('BN')}
+              >
+                BN
+              </button>
             </div>
 
             {isAuthenticated ? (
@@ -56,7 +70,7 @@ function PublicLayout() {
               </button>
             )}
 
-            <button className={styles.donateBtn}>Donate</button>
+            <button className={styles.donateBtn} onClick={() => navigate('/donate')}>Donate</button>
             
             <button 
               className={styles.mobileMenuBtn} 
@@ -83,25 +97,24 @@ function PublicLayout() {
             <div className={styles.footerCol}>
               <h4>Company</h4>
               <Link to="/">Home</Link>
-              <Link to="#">About Us</Link>
-              <Link to="#">Our Work</Link>
-              <Link to="#">Gallery</Link>
-              <Link to="/">Blog</Link>
+              <Link to="/about">About Us</Link>
+              <Link to="/our-work">Our Work</Link>
+              <Link to="/gallery">Gallery</Link>
+              <Link to="/news">Blog</Link>
             </div>
             
             <div className={styles.footerCol}>
               <h4>Donate</h4>
-              <Link to="#">Orphan Support</Link>
-              <Link to="#">Disaster Relief</Link>
-              <Link to="#">Zakat</Link>
-              <Link to="#">Education</Link>
+              <Link to="/donate">Donate</Link>
+              <Link to="/blood-donate">Blood Donate</Link>
+              <Link to="/blood-request">Blood Request</Link>
             </div>
 
             <div className={styles.footerCol}>
               <h4>Others</h4>
-              <Link to="#">Privacy Policy</Link>
-              <Link to="#">Terms of Service</Link>
-              <Link to="#">Contact Us</Link>
+              <Link to="/contact">Contact</Link>
+              <Link to="/terms">Terms of Conditions</Link>
+              <Link to="/privacy">Privacy Policy</Link>
             </div>
           </div>
         </div>
@@ -113,23 +126,23 @@ function PublicLayout() {
 
       {/* Mobile Bottom Navigation Bar (Figma spec) */}
       <nav className={styles.mobileBottomNav} aria-label="Mobile Navigation">
-        <Link to="/" className={`${styles.mobileNavItem} ${styles.mobileNavActive}`}>
+        <Link to="/" className={location.pathname === '/' ? `${styles.mobileNavItem} ${styles.mobileNavActive}` : styles.mobileNavItem}>
           <span className={styles.mobileNavIcon}>🏠</span>
           <span>Home</span>
         </Link>
-        <Link to="#" className={styles.mobileNavItem}>
+        <Link to="/donate" className={location.pathname === '/donate' ? `${styles.mobileNavItem} ${styles.mobileNavActive}` : styles.mobileNavItem}>
           <span className={styles.mobileNavIcon}>💚</span>
           <span>Donate</span>
         </Link>
-        <Link to="#" className={styles.mobileNavItem}>
+        <Link to="/events" className={location.pathname === '/events' ? `${styles.mobileNavItem} ${styles.mobileNavActive}` : styles.mobileNavItem}>
           <span className={styles.mobileNavIcon}>🔔</span>
           <span>Alerts</span>
         </Link>
-        <Link to="#" className={styles.mobileNavItem}>
+        <Link to="/partnership" className={location.pathname === '/partnership' ? `${styles.mobileNavItem} ${styles.mobileNavActive}` : styles.mobileNavItem}>
           <span className={styles.mobileNavIcon}>🤝</span>
           <span>Partner</span>
         </Link>
-        <Link to="/" className={styles.mobileNavItem}>
+        <Link to="/news" className={isNewsActive ? `${styles.mobileNavItem} ${styles.mobileNavActive}` : styles.mobileNavItem}>
           <span className={styles.mobileNavIcon}>📰</span>
           <span>Articles</span>
         </Link>
