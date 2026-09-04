@@ -1,12 +1,15 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { LayoutGrid, Users, FileText, Settings, User, LogOut } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 import logoImage from '../../assets/logo.png';
 import styles from './AdminLayout.module.css';
 
 function AdminLayout() {
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
 
   const handleLogout = () => {
+    logout();
     navigate('/signin');
   };
 
@@ -36,7 +39,7 @@ function AdminLayout() {
           </NavLink>
           
           <NavLink 
-            to="/admin/content" 
+            to="/admin/blog-news" 
             className={({ isActive }) => isActive ? `${styles.navItem} ${styles.active}` : styles.navItem}
           >
             <FileText size={20} />
@@ -58,8 +61,8 @@ function AdminLayout() {
               <User size={24} />
             </div>
             <div className={styles.userInfo}>
-              <p className={styles.userName}>Super Admin</p>
-              <p className={styles.userEmail}>superadmin@kichukori.com</p>
+              <p className={styles.userName}>{user?.name || 'Super Admin'}</p>
+              <p className={styles.userEmail}>{user?.email || 'superadmin@kichukori.com'}</p>
             </div>
           </div>
           <button className={styles.logoutBtn} onClick={handleLogout}>

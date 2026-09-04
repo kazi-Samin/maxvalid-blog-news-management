@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   Bold, Italic, Underline, Type, List,
   Image as ImageIcon, Link as LinkIcon,
-  UploadCloud, X, Trash2, ChevronDown
+  UploadCloud, X, Trash2
 } from 'lucide-react';
 import styles from './AdminDashboardCreate.module.css';
 
@@ -38,10 +38,24 @@ function AdminDashboardCreate() {
 
   const toggleTag = (tag) => {
     if (tags.includes(tag)) {
-      setTags(tags.filter(t => t !== tag));
-    } else if (tags.length < 3) {
-      setTags([...tags, tag]);
+      setTags(tags.filter((t) => t !== tag));
+    } else {
+      if (tags.length < 3) {
+        setTags([...tags, tag]);
+      } else {
+        alert('You can only select up to 3 tags.');
+      }
     }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!title.trim()) {
+      alert('Please provide a content title.');
+      return;
+    }
+    alert('Content created successfully!');
+    navigate('/admin/blog-news');
   };
 
   return (
@@ -68,101 +82,112 @@ function AdminDashboardCreate() {
               type="text"
               placeholder="Enter content title..."
               className={styles.input}
-              maxLength={MAX_TITLE}
               value={title}
+              maxLength={MAX_TITLE}
               onChange={(e) => setTitle(e.target.value)}
             />
-            <span className={styles.charCount}>{title.length} / {MAX_TITLE}</span>
+            <span className={styles.counter}>{title.length}/{MAX_TITLE}</span>
           </div>
         </div>
 
-        {/* Rich Text Toolbar + Body */}
+        {/* Body Field with Formatting Toolbar */}
         <div className={styles.field}>
           <label className={styles.label}>Content Body</label>
-          <div className={styles.editor}>
+          <div className={styles.editorBox}>
             <div className={styles.toolbar}>
-              <button className={styles.toolBtn} title="Bold"><Bold size={15} /></button>
-              <button className={styles.toolBtn} title="Italic"><Italic size={15} /></button>
-              <button className={styles.toolBtn} title="Underline"><Underline size={15} /></button>
-              <div className={styles.toolDivider} />
-              <button className={styles.toolBtn} title="Heading"><Type size={15} /></button>
-              <button className={styles.toolBtn} title="List"><List size={15} /></button>
-              <div className={styles.toolDivider} />
-              <button
-                className={styles.toolBtn}
-                title="Upload Image"
-                onClick={() => setIsModalOpen(true)}
-              >
-                <ImageIcon size={15} />
+              <button type="button" className={styles.toolBtn} title="Bold"><Bold size={16} /></button>
+              <button type="button" className={styles.toolBtn} title="Italic"><Italic size={16} /></button>
+              <button type="button" className={styles.toolBtn} title="Underline"><Underline size={16} /></button>
+              <span className={styles.toolDivider}></span>
+              <button type="button" className={styles.toolBtn} title="Heading"><Type size={16} /></button>
+              <button type="button" className={styles.toolBtn} title="List"><List size={16} /></button>
+              <span className={styles.toolDivider}></span>
+              <button type="button" className={styles.toolBtn} title="Add Image" onClick={() => setIsModalOpen(true)}>
+                <ImageIcon size={16} />
               </button>
-              <button className={styles.toolBtn} title="Insert Link"><LinkIcon size={15} /></button>
+              <button type="button" className={styles.toolBtn} title="Add Link"><LinkIcon size={16} /></button>
             </div>
             <textarea
+              placeholder="Write your article or news content here..."
               className={styles.textarea}
-              placeholder="Type your content here..."
-              rows={10}
+              rows={8}
               value={body}
               onChange={(e) => setBody(e.target.value)}
             />
           </div>
         </div>
 
-        {/* Tags */}
+        {/* Upload Featured Image Button */}
         <div className={styles.field}>
-          <label className={styles.label}>Tags <span className={styles.tagNote}>(max 3)</span></label>
-          <div className={styles.tagContainer}>
-            {TAG_OPTIONS.map(tag => (
+          <label className={styles.label}>Featured Image</label>
+          {uploadedImage ? (
+            <div className={styles.imagePreviewWrapper}>
+              <img src={uploadedImage} alt="Uploaded Preview" className={styles.imagePreview} />
               <button
-                key={tag}
-                className={`${styles.tagChip} ${tags.includes(tag) ? styles.tagActive : ''}`}
-                onClick={() => toggleTag(tag)}
-                disabled={!tags.includes(tag) && tags.length >= 3}
+                type="button"
+                className={styles.removeImgBtn}
+                onClick={() => setUploadedImage(null)}
               >
-                {tag}
+                <Trash2 size={16} /> Remove Image
               </button>
-            ))}
-          </div>
-          {tags.length > 0 && (
-            <div className={styles.selectedTags}>
-              {tags.map(tag => (
-                <span key={tag} className={styles.selectedTag}>
-                  {tag}
-                  <button onClick={() => toggleTag(tag)} className={styles.removeTag}><X size={11} /></button>
-                </span>
-              ))}
             </div>
+          ) : (
+            <button
+              type="button"
+              className={styles.uploadTriggerBtn}
+              onClick={() => setIsModalOpen(true)}
+            >
+              <UploadCloud size={20} />
+              <span>Upload Featured Image</span>
+            </button>
           )}
         </div>
 
-        {/* Uploaded Image Preview */}
-        {uploadedImage && (
-          <div className={styles.field}>
-            <label className={styles.label}>Uploaded Image</label>
-            <div className={styles.imagePreviewBox}>
-              <img src={uploadedImage} alt="Preview" className={styles.previewImg} />
-              <button className={styles.removeImgBtn} onClick={() => setUploadedImage(null)}>
-                <Trash2 size={15} /> Remove
-              </button>
-            </div>
+        {/* Tags Selection */}
+        <div className={styles.field}>
+          <label className={styles.label}>Tags (Select up to 3)</label>
+          <div className={styles.tagsWrapper}>
+            {TAG_OPTIONS.map((tag) => {
+              const isSelected = tags.includes(tag);
+              return (
+                <button
+                  key={tag}
+                  type="button"
+                  className={isSelected ? `${styles.tagChip} ${styles.tagChipActive}` : styles.tagChip}
+                  onClick={() => toggleTag(tag)}
+                >
+                  {isSelected ? `✓ ${tag}` : `+ ${tag}`}
+                </button>
+              );
+            })}
           </div>
-        )}
+        </div>
 
-        {/* Actions */}
+        {/* Form Actions */}
         <div className={styles.actions}>
-          <button className={styles.cancelBtn} onClick={() => navigate('/admin/content')}>
+          <button
+            type="button"
+            className={styles.cancelBtn}
+            onClick={() => navigate('/admin/blog-news')}
+          >
             Cancel
           </button>
-          <button className={styles.submitBtn}>
+          <button
+            type="button"
+            className={styles.submitBtn}
+            onClick={handleSubmit}
+          >
             Create Content
           </button>
         </div>
+
       </div>
 
       {/* Upload Modal */}
       {isModalOpen && (
-        <div className={styles.overlay} onClick={() => setIsModalOpen(false)}>
+        <div className={styles.modalOverlay} onClick={() => setIsModalOpen(false)}>
           <div
-            className={`${styles.modal} ${isDragging ? styles.dragging : ''}`}
+            className={isDragging ? `${styles.modalCard} ${styles.dragging}` : styles.modalCard}
             onClick={(e) => e.stopPropagation()}
             onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
             onDragLeave={() => setIsDragging(false)}

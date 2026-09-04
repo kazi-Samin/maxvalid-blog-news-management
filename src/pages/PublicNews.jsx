@@ -1,93 +1,14 @@
 import { useState } from 'react';
 import { Search } from 'lucide-react';
 import { useDebounce } from '../hooks/useDebounce';
+import { CATEGORIES, ARTICLES } from '../data/articles';
 import NewsCard from '../components/ui/NewsCard';
 import Pagination from '../components/ui/Pagination';
 import heroImage from '../assets/image 96.png';
-import imgFeatured from '../assets/span.minimal__image__root.png';  // Tree planting - used for featured
-import imgFloodBoat from '../assets/span.minimal__image__root (1).png';  // Orange rescuers carrying boat
-import imgImams from '../assets/span.minimal__image__root (2).png';      // Kids No Smoking blue uniform
-import imgQurbani from '../assets/span.minimal__image__root (3).png';    // Yellow helmet woman in flood
+import imgFeatured from '../assets/span.minimal__image__root.png';
 import styles from './PublicNews.module.css';
 
-const CATEGORIES = [
-  "All Gallery & Media", "Blood Donation", "Tree Plantation",
-  "Education & Student Support", "Women Empowerment", "Disability Support",
-  "Community Development", "Anti-Drug Awareness", "Travel & Tour Management",
-  "Disaster", "Blanket Distribution During Winter", "Iftar Distribution",
-  "Winter Clothing Distribution", "Safe Drinking Water", "Qurbani for Everyone",
-  "Food Distribution", "Skills Development Training"
-];
-
-// 9 cards — 3 rows × 3 columns — exactly matching Figma
-const NEWS_DATA = [
-  // --- Row 1 ---
-  {
-    id: 1,
-    title: "Relief distribution among flood victims in Greater...",
-    description: "A severe flood hit Chittagong in the first week of this month. Extensive areas in Chittagong, Cox's Bazar, and Bandarban were...",
-    date: "July 22, 2026",
-    image: imgFloodBoat
-  },
-  {
-    id: 2,
-    title: "3rd Imams' Training Completed",
-    description: "The 3rd Imams' Training by the As-Sunnah Foundation has been successfully completed with the participation of selected Imams and...",
-    date: "July 11, 2026",
-    image: imgImams
-  },
-  {
-    id: 3,
-    title: "Qurbani for All 2026 Project Completed",
-    description: "Breaking all past records to bring Eid smiles to the faces of the country's underprivileged and disaster-affected people, the social...",
-    date: "June 25, 2026",
-    image: imgQurbani
-  },
-  // --- Row 2 ---
-  {
-    id: 4,
-    title: "Community Health Camp In Sylhet Organized",
-    description: "A free health camp was organized in Sylhet, providing essential medical checkups and medicine to over 500 underprivileged families...",
-    date: "August 5, 2026",
-    image: imgFeatured
-  },
-  {
-    id: 5,
-    title: "3rd Imams' Training Completed",
-    description: "The 3rd Imams' Training by the As-Sunnah Foundation has been successfully completed with the participation of selected Imams and...",
-    date: "July 11, 2026",
-    image: imgImams
-  },
-  {
-    id: 6,
-    title: "Qurbani for All 2026 Project Completed",
-    description: "Breaking all past records to bring Eid smiles to the faces of the country's underprivileged and disaster-affected people, the social...",
-    date: "June 25, 2026",
-    image: imgQurbani
-  },
-  // --- Row 3 ---
-  {
-    id: 7,
-    title: "Relief distribution among flood victims in Greater...",
-    description: "A severe flood hit Chittagong in the first week of this month. Extensive areas in Chittagong, Cox's Bazar, and Bandarban were...",
-    date: "July 22, 2026",
-    image: imgFloodBoat
-  },
-  {
-    id: 8,
-    title: "3rd Imams' Training Completed",
-    description: "The 3rd Imams' Training by the As-Sunnah Foundation has been successfully completed with the participation of selected Imams and...",
-    date: "July 11, 2026",
-    image: imgImams
-  },
-  {
-    id: 9,
-    title: "Qurbani for All 2026 Project Completed",
-    description: "Breaking all past records to bring Eid smiles to the faces of the country's underprivileged and disaster-affected people, the social...",
-    date: "June 25, 2026",
-    image: imgQurbani
-  }
-];
+const ITEMS_PER_PAGE = 6;
 
 function PublicNews() {
   const [selectedCategory, setSelectedCategory] = useState("All Gallery & Media");
@@ -95,12 +16,32 @@ function PublicNews() {
   const [currentPage, setCurrentPage] = useState(1);
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
-  const filteredNews = NEWS_DATA.filter((item) => {
-    const matchesCategory = selectedCategory === "All Gallery & Media" || true;
-    const matchesSearch = item.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
-                          item.description.toLowerCase().includes(debouncedSearchTerm.toLowerCase());
+  // Filter articles based on category and debounced search term
+  const filteredNews = ARTICLES.filter((item) => {
+    const matchesCategory =
+      selectedCategory === "All Gallery & Media" || item.category === selectedCategory;
+    const matchesSearch =
+      item.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
+      item.description.toLowerCase().includes(debouncedSearchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
   });
+
+  // Calculate pagination slice
+  const totalPages = Math.ceil(filteredNews.length / ITEMS_PER_PAGE) || 1;
+  const currentArticles = filteredNews.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
+    setCurrentPage(1);
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1);
+  };
 
   return (
     <div className={styles.page}>
@@ -127,7 +68,7 @@ function PublicNews() {
               placeholder="Blog search"
               className={styles.searchInput}
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={handleSearchChange}
             />
           </div>
 
@@ -135,13 +76,13 @@ function PublicNews() {
           <h2 className={styles.sectionTitle}>Featured News &amp; Articles</h2>
           <NewsCard
             featured={true}
-            title="Relief distribution among flood victims in Greater..."
-            description="A severe flood hit Chittagong in the first week of this month. Extensive areas in Chittagong, Cox's Bazar, and Bandarban were..."
+            title="Relief distribution among flood victims in Greater Chittagong"
+            description="A severe flood hit Chittagong in the first week of this month. Extensive areas in Chittagong, Cox's Bazar, and Bandarban were severely affected. Relief teams delivered emergency packages..."
             date="July 22, 2026"
             image={imgFeatured}
           />
 
-          {/* 2-col: Sidebar + 3-col Cards Grid */}
+          {/* 2-col: Sidebar + Articles Grid */}
           <div className={styles.gridContainer}>
             <aside className={styles.sidebar}>
               <ul className={styles.categoryList}>
@@ -149,7 +90,7 @@ function PublicNews() {
                   <li
                     key={index}
                     className={selectedCategory === cat ? styles.activeCategory : ''}
-                    onClick={() => setSelectedCategory(cat)}
+                    onClick={() => handleCategorySelect(cat)}
                   >
                     {cat}
                   </li>
@@ -158,19 +99,32 @@ function PublicNews() {
             </aside>
 
             <div className={styles.articlesGrid}>
-              {filteredNews.map((news) => (
-                <NewsCard
-                  key={news.id}
-                  title={news.title}
-                  description={news.description}
-                  date={news.date}
-                  image={news.image}
-                />
-              ))}
+              {currentArticles.length > 0 ? (
+                currentArticles.map((news) => (
+                  <NewsCard
+                    key={news.id}
+                    title={news.title}
+                    description={news.description}
+                    date={news.date}
+                    image={news.image}
+                  />
+                ))
+              ) : (
+                <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '40px 20px', color: '#666' }}>
+                  <h3>No articles found</h3>
+                  <p>Try adjusting your search terms or category selection.</p>
+                </div>
+              )}
             </div>
           </div>
 
-          <Pagination currentPage={currentPage} onPageChange={(p) => setCurrentPage(p)} totalPages={512} />
+          {totalPages > 1 && (
+            <Pagination
+              currentPage={currentPage}
+              onPageChange={(p) => setCurrentPage(p)}
+              totalPages={totalPages}
+            />
+          )}
 
         </div>
       </section>

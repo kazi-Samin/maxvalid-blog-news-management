@@ -1,16 +1,22 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import logoImage from '../assets/logo.png';
 import styles from './SignIn.module.css';
 
 function SignIn() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { login } = useAuth();
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const from = location.state?.from?.pathname || '/admin/content';
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,12 +26,13 @@ function SignIn() {
       return;
     }
     setLoading(true);
-    // Simulated auth — in production this calls a real API
+    
     setTimeout(() => {
-      if (email === 'superadmin@kichukori.com' && password === 'admin123') {
-        navigate('/admin/content');
+      const result = login(email, password);
+      if (result.success) {
+        navigate(from, { replace: true });
       } else {
-        setError('Invalid credentials. Try superadmin@kichukori.com / admin123');
+        setError(result.error);
         setLoading(false);
       }
     }, 800);
@@ -49,15 +56,23 @@ function SignIn() {
 
       {/* Right panel - form */}
       <div className={styles.rightPanel}>
-        <div className={styles.formBox}>
-          <div className={styles.formHeader}>
-            <h2 className={styles.formTitle}>Welcome back 👋</h2>
-            <p className={styles.formSub}>Sign in to the Bandhan Paribar admin panel</p>
+        <div className={styles.formCard}>
+          <div className={styles.backLinkWrapper}>
+            <Link to="/" className={styles.backLink}>
+              &larr; Back to Website
+            </Link>
           </div>
 
-          <form className={styles.form} onSubmit={handleSubmit} noValidate>
-            <div className={styles.field}>
-              <label className={styles.label} htmlFor="email">Email Address</label>
+          <h2 className={styles.formTitle}>Welcome back</h2>
+          <p className={styles.formSub}>Sign in to the Bandhan Paribar admin panel</p>
+
+          {error && <div className={styles.errorAlert}>{error}</div>}
+
+          <form onSubmit={handleSubmit} className={styles.form}>
+            <div className={styles.inputGroup}>
+              <label htmlFor="email" className={styles.label}>
+                Email Address
+              </label>
               <input
                 id="email"
                 type="email"
@@ -69,14 +84,16 @@ function SignIn() {
               />
             </div>
 
-            <div className={styles.field}>
-              <label className={styles.label} htmlFor="password">Password</label>
+            <div className={styles.inputGroup}>
+              <label htmlFor="password" className={styles.label}>
+                Password
+              </label>
               <div className={styles.passwordWrapper}>
                 <input
                   id="password"
                   type={showPass ? 'text' : 'password'}
                   className={styles.input}
-                  placeholder="Enter your password"
+                  placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   autoComplete="current-password"
@@ -87,29 +104,19 @@ function SignIn() {
                   onClick={() => setShowPass(!showPass)}
                   aria-label={showPass ? 'Hide password' : 'Show password'}
                 >
-                  {showPass ? <EyeOff size={17} /> : <Eye size={17} />}
+                  {showPass ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
             </div>
 
-            {error && (
-              <div className={styles.errorMsg} role="alert">
-                {error}
-              </div>
-            )}
+            <div className={styles.hintBox}>
+              <small>Demo Admin Credential: <strong>superadmin@kichukori.com</strong> / <strong>admin123</strong></small>
+            </div>
 
-            <button
-              type="submit"
-              className={styles.submitBtn}
-              disabled={loading}
-            >
+            <button type="submit" className={styles.submitBtn} disabled={loading}>
               {loading ? 'Signing in...' : 'Sign In'}
             </button>
           </form>
-
-          <p className={styles.backLink}>
-            <Link to="/">&larr; Back to website</Link>
-          </p>
         </div>
       </div>
     </div>
