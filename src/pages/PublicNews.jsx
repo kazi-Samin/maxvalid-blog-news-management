@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Search } from 'lucide-react';
 import { useDebounce } from '../hooks/useDebounce';
-import { CATEGORIES, ARTICLES } from '../data/articles';
+import { CATEGORIES } from '../data/articles';
+import { fetchArticles } from '../services/articleService';
 import NewsCard from '../components/ui/NewsCard';
 import Pagination from '../components/ui/Pagination';
 import heroImage from '../assets/image 96.png';
@@ -11,13 +12,34 @@ import styles from './PublicNews.module.css';
 const ITEMS_PER_PAGE = 9; // 3 rows × 3 columns = 9 cards per page (matching Figma spec)
 
 function PublicNews() {
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("All Gallery & Media");
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
+  useEffect(() => {
+    let isMounted = true;
+    
+    async function loadData() {
+      setLoading(true);
+      const res = await fetchArticles();
+      if (isMounted) {
+        setArticles(res.articles);
+        setLoading(false);
+      }
+    }
+
+    loadData();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   // Filter articles based on category and debounced search term
-  const filteredNews = ARTICLES.filter((item) => {
+  const filteredNews = articles.filter((item) => {
     const matchesCategory =
       selectedCategory === "All Gallery & Media" || item.category === selectedCategory;
     const matchesSearch =
@@ -99,7 +121,11 @@ function PublicNews() {
             </aside>
 
             <div className={styles.articlesGrid}>
-              {currentArticles.length > 0 ? (
+              {loading ? (
+                <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '60px 20px', color: '#667085' }}>
+                  <p style={{ fontSize: '1rem', fontWeight: 600 }}>Loading articles...</p>
+                </div>
+              ) : currentArticles.length > 0 ? (
                 currentArticles.map((news) => (
                   <NewsCard
                     key={news.id}
@@ -118,7 +144,7 @@ function PublicNews() {
             </div>
           </div>
 
-          {totalPages > 1 && (
+          {!loading && totalPages > 1 && (
             <Pagination
               currentPage={currentPage}
               onPageChange={(p) => setCurrentPage(p)}

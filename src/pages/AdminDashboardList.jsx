@@ -1,30 +1,37 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Search, ExternalLink, MoreVertical, Edit, Trash2, Eye, ChevronDown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { fetchArticles } from '../services/articleService';
 import styles from './AdminDashboardList.module.css';
-
-const MOCK_ROWS = [
-  { id: 1, title: 'Relief distribution among flood victims...', date: 'Jun 29, 2026', time: '10:30 AM', link: '#' },
-  { id: 2, title: 'Community Health Camp in Sylhet O...', date: 'Jun 29, 2026', time: '10:30 AM', link: '#' },
-  { id: 3, title: 'AI Face Morphing in Entertainment', date: 'Jun 29, 2026', time: '10:30 AM', link: '#' },
-  { id: 4, title: 'Virtual Reality Concerts Revolutionize Music Industry', date: 'Jul 15, 2026', time: '7:00 PM', link: '#' },
-  { id: 5, title: 'AI-Powered Scriptwriting Gains Traction in Hollywood', date: 'Aug 4, 2026', time: '2:45 PM', link: '#' },
-  { id: 6, title: 'Deepfake Technology Raises Ethical Questions in Media', date: 'Sep 12, 2026', time: '11:15 AM', link: '#' },
-  { id: 7, title: 'Interactive Storytelling Experiences with AI', date: 'Oct 23, 2026', time: '9:00 AM', link: '#' },
-  { id: 8, title: 'AI Animation Tools Speed Up Film Production', date: 'Nov 5, 2026', time: '1:30 PM', link: '#' },
-  { id: 9, title: 'Augmented Reality Games Incorporate Real-Time AI', date: 'Dec 18, 2026', time: '4:45 PM', link: '#' },
-  { id: 10, title: 'AI Face Morphing in Entertainment', date: 'Jun 29, 2026', time: '10:30 AM', link: '#' },
-];
 
 function AdminDashboardList() {
   const navigate = useNavigate();
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [openMenuId, setOpenMenuId] = useState(null);
 
-  const filtered = MOCK_ROWS.filter(row =>
+  useEffect(() => {
+    let isMounted = true;
+    async function loadData() {
+      setLoading(true);
+      const data = await fetchArticles();
+      if (isMounted) {
+        setArticles(data);
+        setLoading(false);
+      }
+    }
+    loadData();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const filtered = articles.filter(row =>
     row.title.toLowerCase().includes(search.toLowerCase())
   );
+
 
   return (
     <div className={styles.container}>
@@ -70,7 +77,13 @@ function AdminDashboardList() {
             </tr>
           </thead>
           <tbody>
-            {filtered.length > 0 ? (
+            {loading ? (
+              <tr>
+                <td colSpan="4" style={{ textAlign: 'center', padding: '30px', color: '#666' }}>
+                  Loading content...
+                </td>
+              </tr>
+            ) : filtered.length > 0 ? (
               filtered.map((row) => (
                 <tr key={row.id}>
                   <td className={styles.titleCell}>{row.title}</td>
