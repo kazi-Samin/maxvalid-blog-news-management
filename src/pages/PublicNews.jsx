@@ -98,8 +98,12 @@ function PublicNews() {
           <h2 className={styles.sectionTitle}>Featured News &amp; Articles</h2>
           <NewsCard
             featured={true}
-            title="Relief distribution among flood victims in Greater Chittagong"
-            description="A severe flood hit Chittagong in the first week of this month. Extensive areas in Chittagong, Cox's Bazar, and Bandarban were severely affected. Relief teams delivered emergency packages..."
+            title={
+              <>
+      Relief distribution among <br />
+      flood victims in Greater...
+    </>}
+            description="A severe flood hit Chittagong in the first week of this month. Extensive areas in Chittagong, Cox's Bazar, and Bandarban were"
             date="July 22, 2026"
             image={imgFeatured}
           />

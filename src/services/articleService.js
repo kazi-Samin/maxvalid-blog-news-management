@@ -8,32 +8,23 @@ const API_URL = 'https://dummyjson.com/posts?limit=30';
  * Using deterministic modulo arithmetic on post.id ensures visual consistency across renders.
  */
 function normalizePost(post) {
+  // Map to the matching local article using modulo so content matches the Figma design
+  const localArticle = ARTICLES[(post.id - 1) % ARTICLES.length];
+
   // Deterministic category pick from CATEGORIES array (skipping index 0 "All Gallery & Media")
   const categoryIndex = (post.id % (CATEGORIES.length - 1)) + 1;
-  const category = CATEGORIES[categoryIndex] || CATEGORIES[1];
-
-  // Deterministic date assignment based on post ID
-  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  const month = monthNames[post.id % 12];
-  const day = (post.id * 7) % 28 + 1;
-  const year = 2026;
-  const formattedDate = `${month} ${day}, ${year}`;
-
-  // Reuse deterministic local image asset from ARTICLES array
-  const fallbackArticle = ARTICLES[(post.id - 1) % ARTICLES.length];
-  const image = fallbackArticle ? fallbackArticle.image : ARTICLES[0].image;
-  const sourceLink = fallbackArticle ? fallbackArticle.sourceLink : 'https://example.com/news';
+  const category = localArticle ? localArticle.category : (CATEGORIES[categoryIndex] || CATEGORIES[1]);
 
   return {
     id: post.id,
-    title: post.title,
-    description: post.body,
-    date: formattedDate,
+    title: localArticle ? localArticle.title : post.title,
+    description: localArticle ? localArticle.description : post.body,
+    date: localArticle ? localArticle.date : `January ${post.id}, 2026`,
     time: `${(post.id % 12) + 1}:00 AM`,
     category: category,
-    image: image,
-    sourceLink: sourceLink,
-    tags: Array.isArray(post.tags) && post.tags.length > 0 ? post.tags : ['News', 'Community']
+    image: localArticle ? localArticle.image : ARTICLES[0].image,
+    sourceLink: localArticle ? localArticle.sourceLink : 'https://example.com/news',
+    tags: localArticle ? localArticle.tags : (Array.isArray(post.tags) && post.tags.length > 0 ? post.tags : ['News', 'Community'])
   };
 }
 

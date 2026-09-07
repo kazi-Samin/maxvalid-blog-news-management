@@ -4,6 +4,7 @@
   justify-content: center;
   gap: 0.5rem;
   margin: 3rem 0;
+  flex-wrap: wrap;
 }
 
 .pageBtn {
@@ -19,6 +20,7 @@
   font-size: 0.9rem;
   font-weight: 500;
   transition: all 0.2s;
+  flex-shrink: 0;
 }
 
 .pageBtn:hover:not(:disabled) {
@@ -44,4 +46,21 @@
   width: 32px;
   height: 32px;
   color: #adb5bd;
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .pagination {
+    gap: 0.35rem;
+    margin: 2rem 0;
+  }
+  .pageBtn {
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
+  }
+  .ellipsis {
+    width: 28px;
+    height: 28px;
+  }
 }

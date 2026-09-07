@@ -18,7 +18,7 @@ function AdminDashboardList() {
       setLoading(true);
       const data = await fetchArticles();
       if (isMounted) {
-        setArticles(data);
+        setArticles(data.articles || []);
         setLoading(false);
       }
     }
@@ -31,7 +31,6 @@ function AdminDashboardList() {
   const filtered = articles.filter(row =>
     row.title.toLowerCase().includes(search.toLowerCase())
   );
-
 
   return (
     <div className={styles.container}>
@@ -93,7 +92,7 @@ function AdminDashboardList() {
                   </td>
                   <td>
                     <a
-                      href={row.link}
+                      href={row.sourceLink || row.link}
                       target="_blank"
                       rel="noopener noreferrer"
                       className={styles.linkIcon}

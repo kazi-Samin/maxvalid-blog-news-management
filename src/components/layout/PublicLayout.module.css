@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* Floating pill navbar — transparent frosted glass over the hero image */
@@ -80,6 +81,7 @@
   align-items: center;
   justify-content: space-between;
   height: 60px;
+  box-sizing: border-box;
 }
 
 .logo {
@@ -216,7 +218,7 @@
 
 .footerBrand {
   flex: 1;
-  min-width: 260px;
+  min-width: 0;
   max-width: 380px;
 }
 
@@ -303,13 +305,83 @@
   .header {
     width: calc(100% - 24px);
     top: 8px;
+    border-radius: 20px;
   }
   .container {
-    padding: 0 16px;
+    padding: 0 12px;
+    height: 52px;
+  }
+  .logoImage {
+    height: 28px;
+  }
+  .headerActions {
+    gap: 0.4rem;
+  }
+  .langBtn, .langBtnActive {
+    padding: 3px 7px;
+    font-size: 0.72rem;
+  }
+  .signInBtn {
+    padding: 4px 10px;
+    font-size: 0.78rem;
+  }
+  .donateBtn {
+    padding: 4px 10px;
+    font-size: 0.78rem;
+  }
+  .navOpen {
+    padding: 1rem 1.25rem;
+    gap: 0.75rem;
+    border-radius: 12px;
+  }
+  .footer {
+    padding: 2.5rem 1rem 5rem;
+  }
+  .footerContainer {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .footerBrand {
+    max-width: 100%;
   }
   .footerLinksGroup {
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 1.5rem;
+  }
+  .footerCol {
+    min-width: 80px;
+  }
+  .copyright {
+    margin-top: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    width: calc(100% - 16px);
+    top: 6px;
+  }
+  .container {
+    padding: 0 10px;
+    height: 48px;
+  }
+  .logoImage {
+    height: 24px;
+  }
+  .signInBtn {
+    padding: 3px 8px;
+    font-size: 0.72rem;
+  }
+  .donateBtn {
+    padding: 3px 8px;
+    font-size: 0.72rem;
+  }
+  .footer {
+    padding: 2rem 0.75rem 5rem;
+  }
+  .footerLinksGroup {
+    gap: 1rem;
   }
 }
 
@@ -340,6 +412,7 @@
   font-size: 0.72rem;
   font-weight: 500;
   flex: 1;
+  min-width: 0;
 }
 
 .mobileNavIcon {

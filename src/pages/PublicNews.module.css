@@ -1,5 +1,6 @@
 .page {
   width: 100%;
+  overflow-x: hidden;
 }
 
 /* ===== HERO ===== */
@@ -23,6 +24,7 @@
   position: relative;
   z-index: 10;
   text-align: center;
+  padding: 0 1rem;
 }
 
 .heroTitle {
@@ -43,6 +45,7 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 2rem;
+  box-sizing: border-box;
 }
 
 /* ===== SEARCH ===== */
@@ -69,6 +72,7 @@
   color: #495057;
   transition: border-color 0.2s, box-shadow 0.2s;
   font-family: inherit;
+  box-sizing: border-box;
 }
 
 .searchInput:focus {
@@ -131,31 +135,68 @@
   font-weight: 600;
 }
 
-/* ===== ARTICLES GRID: exactly 3 columns, 16px gap ===== */
+/* ===== ARTICLES GRID: exactly 3 columns with max width 283.33px and 16px gap ===== */
 .articlesGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 283.33px));
   gap: 16px;
-  align-items: stretch; /* all cards in a row match height */
+  align-items: stretch;
 }
 
 /* ===== RESPONSIVE ===== */
+
+/* Tablet: hide sidebar, keep 3 columns */
 @media (max-width: 1100px) {
   .gridContainer {
     grid-template-columns: 1fr;
   }
   .sidebar {
+    position: static;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #e9ecef;
+    padding: 0;
+    background: transparent;
+  }
+  .categoryList {
+    flex-direction: row;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 0;
+    padding: 0.5rem 0;
+    scrollbar-width: none;
+  }
+  .categoryList::-webkit-scrollbar {
     display: none;
+  }
+  .categoryList li {
+    white-space: nowrap;
+    border-left: none;
+    border-bottom: 3px solid transparent;
+    padding: 0.5rem 1rem;
+    font-size: 0.82rem;
+    flex-shrink: 0;
+  }
+  .categoryList li.activeCategory {
+    border-left-color: transparent;
+    border-bottom-color: #007bff;
+    background: transparent;
   }
   .articlesGrid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-@media (max-width: 768px) {
+/* Tablet small: 2 columns */
+@media (max-width: 900px) {
   .articlesGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
   .hero {
     height: 280px;
   }
@@ -163,15 +204,44 @@
     font-size: 2rem;
   }
   .contentSection {
-    padding: 1.5rem 0 6rem;
+    padding: 1.5rem 0 5rem;
   }
   .container {
     padding: 0 1rem;
   }
-}
-
-@media (max-width: 480px) {
+  .sectionTitle {
+    font-size: 1.15rem;
+  }
   .articlesGrid {
     grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .searchInput {
+    font-size: 0.9rem;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+  .hero {
+    height: 220px;
+  }
+  .heroTitle {
+    font-size: 1.6rem;
+  }
+  .contentSection {
+    padding: 1rem 0 5rem;
+  }
+  .container {
+    padding: 0 0.75rem;
+  }
+  .articlesGrid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .gridContainer {
+    gap: 1rem;
+    margin-top: 1.25rem;
   }
 }

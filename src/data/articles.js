@@ -1,4 +1,3 @@
-import imgFeatured from '../assets/span.minimal__image__root.png';
 import imgFloodBoat from '../assets/span.minimal__image__root (1).png';
 import imgImams from '../assets/span.minimal__image__root (2).png';
 import imgQurbani from '../assets/span.minimal__image__root (3).png';
@@ -15,92 +14,101 @@ export const CATEGORIES = [
 export const ARTICLES = [
   {
     id: 1,
-    title: "Relief distribution among flood victims in Greater...",
-    description: "A severe flood hit Chittagong in the first week of this month. Extensive areas in Chittagong, Cox's Bazar, and Bandarban were...",
+    title: "Relief distribution\namong\nflood victims in\nGreater...",
+    description:
+      "A severe flood hit Chittagong in the\nfirst\nweek of this month. Extensive\nareas in\nChittagong, Cox's Bazar, and\nBandarban were",
     date: "July 22, 2026",
     category: "Disaster",
     image: imgFloodBoat,
     sourceLink: "https://example.com/relief-chittagong",
-    tags: ["Disaster", "Relief", "Chittagong"]
+    tags: ["Disaster", "Relief", "Chittagong"],
   },
   {
     id: 2,
-    title: "3rd Imams' Training Completed",
-    description: "The 3rd Imams' Training by the As-Sunnah Foundation has been successfully completed with the participation of selected Imams and...",
+    title: "3rd Imams' Training\nCompleted",
+    description:
+      "The 3rd Imams' Training by the As-\nSunnah\nFoundation has been successfully\ncompleted\nwith the participation of selected\nImams and",
     date: "July 11, 2026",
     category: "Education & Student Support",
     image: imgImams,
     sourceLink: "https://example.com/imams-training",
-    tags: ["Education", "Training", "Community"]
+    tags: ["Education", "Training", "Community"],
   },
   {
     id: 3,
-    title: "Qurbani for All 2026 Project Completed",
-    description: "Breaking all past records to bring Eid smiles to the faces of the country's underprivileged and disaster-affected people, the social...",
+    title: "Qurbani for All 2026\nProject Completed",
+    description:
+      "Breaking all past records to bring Eid smiles\nto the faces of the country's underprivileged\nand disaster-affected people, the social...",
     date: "June 25, 2026",
     category: "Qurbani for Everyone",
     image: imgQurbani,
     sourceLink: "https://example.com/qurbani-2026",
-    tags: ["Qurbani", "Support", "Social"]
+    tags: ["Qurbani", "Support", "Social"],
   },
   {
     id: 4,
-    title: "Community Health Camp In Sylhet Organized",
-    description: "A free health camp was organized in Sylhet, providing essential medical checkups and medicine to over 500 underprivileged families...",
+    title: "Community Health\nCamp in Sylhet\nOrganized",
+    description:
+      "A free health camp was organized\nin Sylhet,\nproviding essential medical\ncheckups and\nmedicine to over 500\nunderprivileged families.",
     date: "August 5, 2026",
     category: "Community Development",
-    image: imgFeatured,
+    image: imgFloodBoat,
     sourceLink: "https://example.com/health-camp-sylhet",
-    tags: ["Health", "Community", "Sylhet"]
+    tags: ["Health", "Community", "Sylhet"],
   },
   {
     id: 5,
-    title: "Tree Plantation Campaign Across 10 Districts",
-    description: "Planted over 50,000 saplings in schools and public parks across 10 districts to promote environmental sustainability...",
-    date: "August 12, 2026",
-    category: "Tree Plantation",
-    image: imgFeatured,
-    sourceLink: "https://example.com/tree-plantation",
-    tags: ["Tree", "Environment", "Green"]
+    title: "3rd Imams' Training\nCompleted",
+    description:
+      "The 3rd Imams' Training by the As-Sunnah\nFoundation has been successfully\ncompleted\nwith the participation of selected\nImams and...",
+    date: "July 11, 2026",
+    category: "Education & Student Support",
+    image: imgImams,
+    sourceLink: "https://example.com/imams-training-2",
+    tags: ["Education", "Training", "Community"],
   },
   {
     id: 6,
-    title: "Clean Safe Drinking Water Wells Installed",
-    description: "Constructed 25 deep tube-wells in remote villages, ensuring access to clean drinking water for over 10,000 residents...",
-    date: "August 18, 2026",
-    category: "Safe Drinking Water",
-    image: imgFloodBoat,
-    sourceLink: "https://example.com/clean-water-wells",
-    tags: ["Water", "Health", "Village"]
+    title: "Qurbani for All 2026\nProject Completed",
+    description:
+      "Breaking all past records to bring Eid smiles\nto the faces of the country's underprivileged\nand disaster-affected people, the social...",
+    date: "June 25, 2026",
+    category: "Qurbani for Everyone",
+    image: imgQurbani,
+    sourceLink: "https://example.com/qurbani-2026-2",
+    tags: ["Qurbani", "Support", "Social"],
   },
   {
     id: 7,
-    title: "Winter Clothing Distribution Program",
-    description: "Distributed warm blankets and winter jackets to elderly residents and homeless individuals in northern regions...",
-    date: "January 15, 2026",
-    category: "Blanket Distribution During Winter",
-    image: imgImams,
-    sourceLink: "https://example.com/winter-clothing",
-    tags: ["Winter", "Relief", "Clothing"]
+    title: "Youth Empowerment\nWorkshop\nHeld Successfully",
+    description:
+      "The workshop focused on skill\ndevelopment\nand leadership training,\nempowering young\nparticipants from rural areas.",
+    date: "August 1, 2026",
+    category: "Skills Development Training",
+    image: imgFloodBoat,
+    sourceLink: "https://example.com/youth-workshop",
+    tags: ["Youth", "Skills", "Workshop"],
   },
   {
     id: 8,
-    title: "Skills Development Center Inauguration",
-    description: "Opened a new computer and vocational training center offering free courses for youth seeking employment opportunities...",
-    date: "February 20, 2026",
-    category: "Skills Development Training",
-    image: imgQurbani,
-    sourceLink: "https://example.com/skills-center",
-    tags: ["Skills", "Youth", "Education"]
+    title: "3rd Imams' Training\nCompleted",
+    description:
+      "The 3rd Imams' Training by the As-Sunnah\nFoundation has been successfully\ncompleted\nwith the participation of selected\nImams and...",
+    date: "July 11, 2026",
+    category: "Education & Student Support",
+    image: imgImams,
+    sourceLink: "https://example.com/imams-training-3",
+    tags: ["Education", "Training", "Community"],
   },
   {
     id: 9,
-    title: "Blood Donation Drive Collects 300 Bags",
-    description: "Volunteers gathered at the central community hub for a day-long blood donation drive supporting local hospitals...",
-    date: "March 10, 2026",
-    category: "Blood Donation",
-    image: imgFeatured,
-    sourceLink: "https://example.com/blood-donation",
-    tags: ["Blood", "Health", "Volunteer"]
-  }
+    title: "Qurbani for All 2026\nProject Completed",
+    description:
+      "Breaking all past records to bring Eid smiles\nto the faces of the country's underprivileged\nand disaster-affected people, the social...",
+    date: "June 25, 2026",
+    category: "Qurbani for Everyone",
+    image: imgQurbani,
+    sourceLink: "https://example.com/qurbani-2026-3",
+    tags: ["Qurbani", "Support", "Social"],
+  },
 ];
